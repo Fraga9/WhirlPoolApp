@@ -5,6 +5,8 @@ from django.utils import timezone
 class Estatus(models.Model):
     id_status = models.AutoField(primary_key=True)
     estatus = models.CharField(max_length=20, choices=[('Pendiente', 'Pendiente'), ('Verificado', 'Verificado')])
+    def __str__(self):
+        return self.estatus
 
 class Foto(models.Model):
     id_foto = models.AutoField(primary_key=True)
@@ -15,10 +17,14 @@ class Sucursal(models.Model):
     nombre_sucursal = models.CharField(max_length=30)
     latitud = models.DecimalField(max_digits=14, decimal_places=7)
     longitud = models.DecimalField(max_digits=14, decimal_places=7)
+    def __str__(self):
+        return self.nombre_sucursal
 
 class Roles(models.Model):
     id_rol = models.AutoField(primary_key=True)
-    rol = models.CharField(max_length=20, choices=[('option1', 'Option 1'), ('option2', 'Option 2')])
+    rol = models.CharField(max_length=20, choices=[('empleado', 'Empleado'), ('promotor', 'Promotor'), ('supervisor', 'Supervisor')])
+    def __str__(self):
+        return self.rol
 
 class Empleado(models.Model):
     id_empleado = models.AutoField(primary_key=True)
@@ -33,6 +39,8 @@ class Empleado(models.Model):
     tiradas_juego = models.IntegerField()
     monedas_juego = models.IntegerField()
     rol = models.ForeignKey(Roles, on_delete=models.CASCADE, related_name='empleados')
+    def __str__(self):
+        return self.nombre + ' ' + self.apellido
 
 class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)
@@ -48,11 +56,16 @@ class Reporte(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='reportes')
     foto = models.ForeignKey(Foto, on_delete=models.CASCADE, related_name='reportes')
     status = models.ForeignKey(Estatus, on_delete=models.CASCADE, related_name='reportes')
+    def __str__(self):
+        return  str(self.id_reporte) + '. ' + self.motivo
 
 class Personaje(models.Model):
     id_personaje = models.AutoField(primary_key=True)
     nombre_personaje = models.CharField(max_length=50)
     bonificador = models.DecimalField(max_digits=3, decimal_places=1)
+    def __str__(self):
+        return self.nombre_personaje
+
 
 class EmpleadoPersonaje(models.Model):
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
