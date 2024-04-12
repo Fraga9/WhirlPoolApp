@@ -2,6 +2,13 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializer import EstatusSerializer, FotoSerializer, SucursalSerializer, RolesSerializer, EmpleadoSerializer, ReporteSerializer, PersonajeSerializer, EmpleadoPersonajeSerializer
 from .models import Estatus, Foto, Sucursal, Roles, Empleado, Reporte, Personaje, EmpleadoPersonaje
+from django_crud_api.firebase_setup import test_connection
+
+# Test the Firebase connection
+if test_connection():
+    print('Connected to Firebase successfully.')
+else:
+    print('Failed to connect to Firebase.')
 
 # Create your views here.
 class EstatusViewSet(viewsets.ModelViewSet):
