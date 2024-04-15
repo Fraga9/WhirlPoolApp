@@ -1,44 +1,125 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from .serializer import EstatusSerializer, FotoSerializer, SucursalSerializer, RolesSerializer, EmpleadoSerializer, ReporteSerializer, PersonajeSerializer, EmpleadoPersonajeSerializer
-from .models import Estatus, Foto, Sucursal, Roles, Empleado, Reporte, Personaje, EmpleadoPersonaje
-from django_crud_api.firebase_setup import test_connection
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED, HTTP_200_OK
+import os
 
-# Test the Firebase connection
-if test_connection():
-    print('Connected to Firebase successfully.')
-else:
-    print('Failed to connect to Firebase.')
+from .serializer import (
+    EstatusSerializer,
+    FotoSerializer,
+    SucursalSerializer,
+    RolesSerializer,
+    EmpleadoSerializer,
+    ReporteSerializer,
+    PersonajeSerializer,
+    EmpleadoPersonajeSerializer,
+)
 
-# Create your views here.
-class EstatusViewSet(viewsets.ModelViewSet):
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+
+class FirebaseCrudViewSet(viewsets.ViewSet):
+    """
+    CRUD operations for Firestore collections.
+    """
+
+    
+    collection_name = None  # Override this in subclasses
+
+    def get_firestore(self):
+        cred = credentials.Certificate(os.getenv("FIREBASE_CREDENTIALS"))
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(cred)
+        return firestore.client()
+
+    def get_collection(self):
+        db = self.get_firestore()
+        return db.collection(self.collection_name)
+
+    def list(self, request):
+        """
+        Retrieves all documents from the collection.
+        """
+        documents = self.get_collection().stream()
+        serializer = self.get_serializer(documents, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+    def retrieve(self, request, pk=None):
+        """
+        Retrieves a single document by its ID.
+        """
+        doc_ref = self.get_collection().document(pk)
+        doc_snapshot = doc_ref.get()
+        if not doc_snapshot.exists:
+            return Response({"error": "Document not found"}, status=HTTP_400_BAD_REQUEST)
+        serializer = self.get_serializer(doc_snapshot.to_dict())
+        return Response(serializer.data, status=HTTP_200_OK)
+
+    def create(self, request):
+        """
+        Creates a new document in the collection.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        doc_ref = self.get_collection().document()
+        doc_ref.set(data)
+        return Response(serializer.data, status=HTTP_201_CREATED)
+
+    def update(self, request, pk=None):
+        """
+        Updates an existing document by its ID.
+        """
+        doc_ref = self.get_collection().document(pk)
+        serializer = self.get_serializer(doc_ref.get().to_dict(), data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        doc_ref.update(data)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+    def destroy(self, request, pk=None):
+        """
+        Deletes an existing document by its ID.
+        """
+        doc_ref = self.get_collection().document(pk)
+        doc_ref.delete()
+        return Response(status=HTTP_200_OK)
+    
+    def get_queryset(self):
+        return []
+
+
+
+class EstatusViewSet(FirebaseCrudViewSet):
     serializer_class = EstatusSerializer
-    queryset = Estatus.objects.all()    
+    collection_name = "estatus"
 
-class FotoViewSet(viewsets.ModelViewSet):
+
+class FotoViewSet(FirebaseCrudViewSet):
     serializer_class = FotoSerializer
-    queryset = Foto.objects.all()
+    collection_name = "foto"
 
-class SucursalViewSet(viewsets.ModelViewSet):
+class SucursalViewSet(FirebaseCrudViewSet):
     serializer_class = SucursalSerializer
-    queryset = Sucursal.objects.all()
+    collection_name = "sucursal"
 
-class RolesViewSet(viewsets.ModelViewSet):
+class RolesViewSet(FirebaseCrudViewSet):
     serializer_class = RolesSerializer
-    queryset = Roles.objects.all()
+    collection_name = "roles"
 
-class EmpleadoViewSet(viewsets.ModelViewSet):
+class EmpleadoViewSet(FirebaseCrudViewSet):
     serializer_class = EmpleadoSerializer
-    queryset = Empleado.objects.all()
+    collection_name = "empleado"
 
-class ReporteViewSet(viewsets.ModelViewSet):
+class ReporteViewSet(FirebaseCrudViewSet):
     serializer_class = ReporteSerializer
-    queryset = Reporte.objects.all()
+    collection_name = "reporte"
 
-class PersonajeViewSet(viewsets.ModelViewSet):
+class PersonajeViewSet(FirebaseCrudViewSet):
     serializer_class = PersonajeSerializer
-    queryset = Personaje.objects.all()
+    collection_name = "personaje"
 
-class EmpleadoPersonajeViewSet(viewsets.ModelViewSet):
+class EmpleadoPersonajeViewSet(FirebaseCrudViewSet):
     serializer_class = EmpleadoPersonajeSerializer
-    queryset = EmpleadoPersonaje.objects.all()
+    collection_name = "empleadopersonaje"
+
