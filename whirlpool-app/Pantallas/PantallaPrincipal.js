@@ -13,7 +13,7 @@ import PersonajesData from '../ScriptsComponentes/PersonajesData';
 const nombreUsuario = "Miguel";
 const status = 4;
 const personajePrincipal = PersonajesData[0];
-const fotoEmpleado = require("C:/Users/rgarz/OneDrive/Documentos/WhirlpoolApp/WhirlPoolApp/whirlpool-app/images/iconoempleado.png");
+const fotoEmpleado = require("../images/iconoempleado.png");
 const personajeSecundario = PersonajesData[1];
 const imagenWidgetReportar = require("../images/reporteconcelular.png");
 const imagenWidgetAnomalias = require("../images/imagenanomalias.png");
