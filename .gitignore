@@ -35,9 +35,13 @@ yarn-error.*
 *.tsbuildinfo
 
 # Python virtual environment
-myenv/
+
 ```
 
 # Ignore cred
 .env
 cred.json
+
+
+# ignore vscode
+.vscode
