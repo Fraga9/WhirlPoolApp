@@ -45,3 +45,6 @@ cred.json
 
 # ignore vscode
 .vscode
+
+# ignore node_modules
+whirlpool-app\%ProgramData%
