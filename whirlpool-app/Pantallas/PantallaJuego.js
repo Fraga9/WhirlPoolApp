@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import { WebView } from 'react-native-webview';
+import { useFocusEffect } from '@react-navigation/native'; 
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 const PantallaJuego = () => {
-  useEffect(() => {
-    // Cambiar la orientación a horizontal al cargar la pantalla
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    return () => {
-      // Restaurar la orientación original al salir de la pantalla
-      ScreenOrientation.unlockAsync();
-    };
-  }, []); // Se ejecuta solo una vez al montar el componente
+  useFocusEffect(
+    React.useCallback(() => {
+      // Bloquear la orientación a vertical cada vez que la pantalla gana el foco
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+      return () => {
+        // Desbloquear la orientación al perder el foco
+        ScreenOrientation.unlockAsync();
+      };
+    }, [])
+  );
 
   return (
     <WebView source={{ uri: 'https://poki.com/es/g/apple-knight-mini-dungeons' }} style={{ flex: 1 }} />

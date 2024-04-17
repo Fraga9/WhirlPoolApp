@@ -1,58 +1,49 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Entypo } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import PantallaPrincipal from '../Pantallas/PantallaPrincipal';
+import PantallaReporte from '../Pantallas/PantallaReporte';
+import PantallaJuego from '../Pantallas/PantallaJuego';
+import PantallaLeaderboard from '../Pantallas/PantallaLeaderboard';
 
-const NavigationBar = () => {
-  const navigation = useNavigation();
+const Tab = createBottomTabNavigator();
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PantallaPrincipal')}>
-        <Entypo name="home" size={30} color="black" />
-        <Text>Menú</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PantallaReporte')}>
-        <MaterialIcons name="description" size={30} color="black" />
-        <Text>Reporte</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PantallaJuego')}>
-        <Ionicons name="game-controller" size={30} color="black" />
-        <Text>Juego</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('PantallaLeaderboard')}>
-        <MaterialIcons name="leaderboard" size={30} color="black" />
-        <Text>Leaderboard</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+function NavigationBar() {
+    return (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 5,
-    paddingVertical: 2,
-    borderTopWidth: 1,
-    borderTopColor: '#eeb111',
-  },
-  navItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  navText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+                    if (route.name === 'Menú') {
+                        iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name === 'Reporte') {
+                        iconName = focused ? 'document-text' : 'document-text-outline';
+                    } else if (route.name === 'Juego') {
+                        iconName = focused ? 'game-controller' : 'game-controller-outline';
+                    } else if (route.name === 'Leaderboard') {
+                        iconName = focused ? 'stats-chart' : 'stats-chart-outline';
+                    }
+
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: "#F29F05",
+                tabBarInactiveTintColor: 'gray',
+                tabBarStyle: {
+                    backgroundColor: '#1E1E1E',
+                    borderTopColor: 'transparent',
+                    paddingBottom: 5,
+                    paddingTop: 5
+                },
+                headerShown: false
+            })}
+        >
+            <Tab.Screen name="Menú" component={PantallaPrincipal} />
+            <Tab.Screen name="Reporte" component={PantallaReporte} />
+            <Tab.Screen name="Juego" component={PantallaJuego} />
+            <Tab.Screen name="Leaderboard" component={PantallaLeaderboard} />
+        </Tab.Navigator>
+    );
+}
 
 export default NavigationBar;

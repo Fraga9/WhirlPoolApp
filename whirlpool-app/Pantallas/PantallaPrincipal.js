@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, Image, StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import CircleWithImage from '../ScriptsComponentes/CircleWithImage';
 import DetallesReporte from '../ScriptsComponentes/DetallesReporte';
 import Widget from '../ScriptsComponentes/Widget';
 import Progress from '../ScriptsComponentes/Progress';
 import TarjetaPersonaje from '../ScriptsComponentes/TarjetaPersonaje';
-import NavigationBar from '../ScriptsComponentes/NavigationBar';
 import PersonajesData from '../ScriptsComponentes/PersonajesData';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 // Parámetros de prueba
 const nombreUsuario = "Miguel";
@@ -29,7 +29,8 @@ const topRoundedRectangleHeight = topSectionHeight*0.55;
 
 
 const PantallaPrincipal = () => {
-  const navigation = useNavigation();
+const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -88,7 +89,7 @@ const PantallaPrincipal = () => {
         
       </ScrollView>
 
-      <NavigationBar />
+      
 
     </View>
   );

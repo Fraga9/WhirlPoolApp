@@ -1,9 +1,12 @@
 import React from 'react';
-import Navigation from './Pantallas/Navigation';
+import { NavigationContainer } from '@react-navigation/native';
+import Navbar from './ScriptsComponentes/NavigationBar';
 
 const App = () => {
   return (
-    <Navigation />
+    <NavigationContainer>
+      <Navbar />
+    </NavigationContainer>
   );
 };
 
