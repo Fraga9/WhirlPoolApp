@@ -63,9 +63,7 @@ const styles = StyleSheet.create({
         transform: [{ rotate: '-60deg' }],
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 30,
-        borderWidth: 2,
-        borderColor: 'red'
+        marginTop: 30
       },
 });
 
