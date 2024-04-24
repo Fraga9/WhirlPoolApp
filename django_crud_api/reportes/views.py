@@ -51,17 +51,17 @@ def transcribe_audio(request):
 
     audio_file = request.FILES['file']
 
-    # Read audio data from the file
+    # Leer audio
     audio_data = audio_file.read()
 
     # Convierte 3gp a wav
     audio = AudioSegment.from_file(io.BytesIO(audio_data))
-    BASE_DIR = os.getcwd()  # or replace with your base directory
+    BASE_DIR = os.getcwd() 
     wav_directory = os.path.join(BASE_DIR, 'reportes', 'audios')
     wav_filename = 'AdiosVocals.wav'
     wav_path = os.path.join(wav_directory, wav_filename)
 
-    print(wav_path)  # prints the full path to the .wav file
+    print(wav_path)  
     
     audio.export(wav_path, format="wav")
 

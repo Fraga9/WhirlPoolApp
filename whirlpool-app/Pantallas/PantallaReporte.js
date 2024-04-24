@@ -84,7 +84,7 @@ const Report = () => {
         name: 'audio.3gp'
       });
 
-      axios.post('http://192.168.1.86:8000/reportes/transcribe/', formData, {
+      axios.post('http://54.86.33.126:8000/reportes/transcribe/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

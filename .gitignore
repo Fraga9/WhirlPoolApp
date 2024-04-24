@@ -36,6 +36,7 @@ yarn-error.*
 
 # Python virtual environment
 myenv/
+django_crud_api/myenv2
 ```
 
 # Ignore cred
