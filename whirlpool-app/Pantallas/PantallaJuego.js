@@ -16,7 +16,7 @@ const PantallaJuego = () => {
   );
 
   return (
-    <WebView source={{ uri: 'https://poki.com/es/g/apple-knight-mini-dungeons' }} style={{ flex: 1 }} />
+    <WebView source={{ uri: 'https://whido-w7gy.vercel.app/' }} style={{ flex: 1 }} />
   );
 };
   
