@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .serializer import EstatusSerializer, FotoSerializer, SucursalSerializer, RolesSerializer, EmpleadoSerializer, ReporteSerializer, PersonajeSerializer, EmpleadoPersonajeSerializer
 from .models import Estatus, Foto, Sucursal, Roles, Empleado, Reporte, Personaje, EmpleadoPersonaje
 from django.http import JsonResponse
@@ -29,8 +30,15 @@ class RolesViewSet(viewsets.ModelViewSet):
     queryset = Roles.objects.all()
 
 class EmpleadoViewSet(viewsets.ModelViewSet):
-    serializer_class = EmpleadoSerializer
     queryset = Empleado.objects.all()
+    serializer_class = EmpleadoSerializer
+
+    def list(self, request, *args, **kwargs):
+        rol = request.query_params.get('rol', None)
+        if rol is not None:
+            self.queryset = self.queryset.filter(rol=rol)
+        serializer = EmpleadoSerializer(self.queryset, many=True)
+        return Response(serializer.data)
 
 class ReporteViewSet(viewsets.ModelViewSet):
     serializer_class = ReporteSerializer
