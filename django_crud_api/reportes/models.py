@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Estatus(models.Model):
     id_status = models.AutoField(primary_key=True)
-    estatus = models.CharField(max_length=20, choices=[('Pendiente', 'Pendiente'), ('Verificado', 'Verificado')])
+    estatus = models.CharField(max_length=20, choices=[('Cancelado', 'Cancelado'), ('Finalizado', 'Finalizado'), ('Enviado', 'Enviado'), ('Asignado', 'Asignado')])
     def __str__(self):
         return self.estatus
 
@@ -46,6 +46,7 @@ class Reporte(models.Model):
     id_reporte = models.AutoField(primary_key=True)
     motivo = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=255)
+    comentario = models.CharField(max_length=255, null=True, blank=True)
     reportador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_reportador')
     fecha_reporte = models.DateTimeField(auto_now_add=True)
     asignador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_asignador')
