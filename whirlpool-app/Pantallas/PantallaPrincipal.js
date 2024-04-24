@@ -8,6 +8,10 @@ import Progress from '../ScriptsComponentes/Progress';
 import TarjetaPersonaje from '../ScriptsComponentes/TarjetaPersonaje';
 import PersonajesData from '../ScriptsComponentes/PersonajesData';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import PantallaSeleccionPersonaje from './PantallaSeleccionPersonaje';
+import PantallaAnomalias from './PantallaAnomalias';
+import PantallaFotoPerfil from './PantallaFotoPerfil';
+import Reporte from './PantallaReporte';
 
 // Parámetros de prueba
 const nombreUsuario = "Miguel";
@@ -24,12 +28,12 @@ const imagenFondo = require("../images/fondos/fondoprueba.png");
 
 const { height, width } = Dimensions.get('window');
 const topSectionHeight = height * 0.45;
-const saludoContainerHeight = topSectionHeight*0.45;
-const topRoundedRectangleHeight = topSectionHeight*0.55;
+const saludoContainerHeight = topSectionHeight * 0.45;
+const topRoundedRectangleHeight = topSectionHeight * 0.55;
 
 
 const PantallaPrincipal = () => {
-const navigation = useNavigation();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -39,22 +43,22 @@ const navigation = useNavigation();
           <Image source={imagenFondo} style={styles.imagenFondo} />
           <View style={styles.saludoContainer}>
             <View style={styles.circuloSaludo}></View>
-            <View style={[styles.columnContainer, {alignItems: 'flex-start'}]}>
+            <View style={[styles.columnContainer, { alignItems: 'flex-start' }]}>
               <Text style={styles.saludo}>Hola,</Text>
-              <Text style={[styles.saludo, {fontWeight: 'bold'}]}>{nombreUsuario}</Text>
+              <Text style={[styles.saludo, { fontWeight: 'bold' }]}>{nombreUsuario}</Text>
             </View>
           </View>
 
           <View style={styles.topRoundedRectangle}>
-            <View style={[styles.columnContainer, {justifyContent: 'flex-end'}, {alignItems: 'flex-end'}, {height: '100%'}]}>
-              <CircleWithImage color='#6D6D6C' imageSource={personajePrincipal.foto} imageHeight='140%' imageWidth='140%' onPress={() => navigation.navigate('PantallaSeleccionPersonaje')} animate={true}/>
+            <View style={[styles.columnContainer, { justifyContent: 'flex-end' }, { alignItems: 'flex-end' }, { height: '100%' }]}>
+              <CircleWithImage color='#6D6D6C' imageSource={personajePrincipal.foto} imageHeight='140%' imageWidth='140%' onPress={() => navigation.navigate('PantallaSeleccionPersonaje')} animate={true} />
             </View>
-            <View style={[styles.columnContainer, {justifyContent: 'flex-start'}, {alignItems: 'center'}, {height: '100%'}]}>
-              <CircleWithImage color='#eeb111' imageSource={fotoEmpleado} imageHeight='70%' imageWidth='70%' onPress={() => navigation.navigate('PantallaFotoPerfil')} animate={false}/>
+            <View style={[styles.columnContainer, { justifyContent: 'flex-start' }, { alignItems: 'center' }, { height: '100%' }]}>
+              <CircleWithImage color='#eeb111' imageSource={fotoEmpleado} imageHeight='70%' imageWidth='70%' onPress={() => navigation.navigate('PantallaFotoPerfil')} animate={false} />
               <Text>100 puntos</Text>
             </View>
-            <View style={[styles.columnContainer, {justifyContent: 'flex-end'}, {alignItems: 'flex-start'}, {height: '100%'}]}>
-              <CircleWithImage color='#D9D9D9' imageSource={personajeSecundario.foto} imageHeight='140%' imageWidth='140%' onPress={() => navigation.navigate('PantallaSeleccionPersonaje')} animate={true}/>
+            <View style={[styles.columnContainer, { justifyContent: 'flex-end' }, { alignItems: 'flex-start' }, { height: '100%' }]}>
+              <CircleWithImage color='#D9D9D9' imageSource={personajeSecundario.foto} imageHeight='140%' imageWidth='140%' onPress={() => navigation.navigate('PantallaSeleccionPersonaje')} animate={true} />
             </View>
           </View>
 
@@ -62,16 +66,16 @@ const navigation = useNavigation();
 
         <Text style={styles.textoSeccion}>Solicitud en curso</Text>
 
-        <Progress currentStep={status}/>
+        <Progress currentStep={status} />
 
-        <Text style={[styles.textoSeccion, {marginBottom: 0}]}>Tus opciones</Text>
+        <Text style={[styles.textoSeccion, { marginBottom: 0 }]}>Tus opciones</Text>
 
         <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
-          <View style={[styles.rowContainer, {marginTop: 20}]}>
-            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('PantallaReporte')}/>
-            <Widget contenido="Aquí podrás consultar el catálogo de anomalías que puedes reportar" imageSource={imagenWidgetAnomalias} rotation={0} onPress={() => navigation.navigate('PantallaAnomalias')}/>
-            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('PantallaReporte')}/>
-            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={-10} onPress={() => navigation.navigate('PantallaReporte')}/>
+          <View style={[styles.rowContainer, { marginTop: 20 }]}>
+            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('Reporte')} />
+            <Widget contenido="Aquí podrás consultar el catálogo de anomalías que puedes reportar" imageSource={imagenWidgetAnomalias} rotation={0} onPress={() => navigation.navigate('PantallaAnomalias')} />
+            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('Reporte')} />
+            <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={-10} onPress={() => navigation.navigate('Reporte')} />
           </View>
         </ScrollView>
 
@@ -82,14 +86,14 @@ const navigation = useNavigation();
         <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
         <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
         <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
-        
-        <TarjetaPersonaje imageSource={personajeSecundario.foto} nombrePersonaje={"Rotom Lavado"}/>
+
+        <TarjetaPersonaje imageSource={personajeSecundario.foto} nombrePersonaje={"Rotom Lavado"} />
 
         <StatusBar style="auto" />
-        
+
       </ScrollView>
 
-      
+
 
     </View>
   );
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   columnContainer: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
   },
   rowContainer: {
