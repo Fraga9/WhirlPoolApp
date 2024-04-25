@@ -13,6 +13,7 @@ const Leaderboard = () => {
       .then(response => {
         const sortedEmpleados = response.data.sort((a, b) => b.puntos_trabajo - a.puntos_trabajo);
         setEmpleados(sortedEmpleados);
+        console.log(sortedEmpleados);
         setLoading(false);
       })
       .catch(error => console.error(error));
