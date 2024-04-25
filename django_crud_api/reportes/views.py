@@ -28,7 +28,7 @@ class SucursalViewSet(viewsets.ModelViewSet):
 class RolesViewSet(viewsets.ModelViewSet):
     serializer_class = RolesSerializer
     queryset = Roles.objects.all()
-
+    
 class EmpleadoViewSet(viewsets.ModelViewSet):
     queryset = Empleado.objects.all()
     serializer_class = EmpleadoSerializer
@@ -37,7 +37,7 @@ class EmpleadoViewSet(viewsets.ModelViewSet):
         rol = request.query_params.get('rol', None)
         if rol is not None:
             self.queryset = self.queryset.filter(rol=rol)
-        serializer = EmpleadoSerializer(self.queryset, many=True)
+        serializer = EmpleadoSerializer(self.queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
 class ReporteViewSet(viewsets.ModelViewSet):
