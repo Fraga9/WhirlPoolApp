@@ -101,7 +101,7 @@ from django.db.models import Q
 @api_view(['GET'])
 def reportes_en_curso(request):
     # Filtra los reportes con estatus "enviado" o "asignado"
-    reportes = Reporte.objects.filter(Q(status=1) | Q(status=2))
+    reportes = Reporte.objects.filter(Q(status=3) | Q(status=4))
 
     # Serializa los detalles de los reportes
     data = []
