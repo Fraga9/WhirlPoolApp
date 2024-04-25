@@ -10,7 +10,7 @@ class Estatus(models.Model):
 
 class Foto(models.Model):
     id_foto = models.AutoField(primary_key=True)
-    archivo_foto = models.URLField(null = True, blank = True)
+    archivo_foto = models.ImageField(upload_to='fotos/', default='fotos/default.jpg')
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField(primary_key=True)
@@ -33,7 +33,7 @@ class Empleado(models.Model):
     numero_empleado = models.CharField(max_length=10)
     numero_celular = models.CharField(max_length=15)
     email = models.EmailField(max_length=50)
-    foto_perfil = models.URLField(null=True, blank=True)
+    foto_perfil = models.ImageField(upload_to='fotos/', null=True, blank=True)
     puntos_trabajo = models.IntegerField()
     puntos_juego = models.IntegerField()
     tiradas_juego = models.IntegerField()
