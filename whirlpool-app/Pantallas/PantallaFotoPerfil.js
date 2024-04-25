@@ -8,16 +8,19 @@ const PantallaFotoPerfil = () => {
 
     useEffect(() => {
         axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
-          .then(response => {
-            setProfileImage({ uri: response.data.foto_perfil });
-            console.log('hola', response.data.foto_perfil);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }, []);
+            .then(response => {
+                console.log("Response data:", response.data);
+                const fotoPerfil = response.data.foto_perfil;
+                console.log("Foto perfil:", fotoPerfil);
+                setProfileImage(fotoPerfil ? { uri: fotoPerfil } : null);
+            })
+            .catch(error => {
+                console.log("Error fetching profile image:", error);
+            });
+    }, []);
 
-    
+
+
 
 
     const loadImageFromGallery = async () => {
@@ -78,12 +81,12 @@ const PantallaFotoPerfil = () => {
                 'Content-Type': 'multipart/form-data',
             },
         })
-        .then(response => {
-            console.log('Employee updated:', response.data);
-        })
-        .catch(error => {
-            console.error('Error updating employee:', error);
-        });
+            .then(response => {
+                console.log('Employee updated:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating employee:', error);
+            });
     };
 
     return (
@@ -91,7 +94,11 @@ const PantallaFotoPerfil = () => {
             <Text style={[styles.texto, { marginTop: 30, marginBottom: 100 }]}>Foto de perfil</Text>
 
             <View style={styles.circle}>
-                <Image style={styles.foto} source={profileImage ? { uri: profileImage } : require("../images/iconoempleado.png")} />
+                {profileImage ? (
+                    <Image style={styles.foto} source={{ uri: profileImage }} />
+                ) : (
+                    <Image style={styles.foto} source={require("../images/iconoempleado.png")} />
+                )}
             </View>
 
             <TouchableOpacity style={[styles.button, { backgroundColor: '#D9D9D9', marginTop: 60 }]} onPress={loadImageFromGallery}>

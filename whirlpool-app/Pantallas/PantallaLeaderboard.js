@@ -30,10 +30,10 @@ const Leaderboard = () => {
           <View style={styles.podium}>
             <View style={styles.podiumItem}>
               <Avatar source={{ uri: empleados[2]?.foto_perfil }} />
-              <Text style={{ color: '#FFFFFF', marginTop: 5, fontWeight: 'bold' }}>{empleados[2]?.nombre + ' ' + empleados[2]?.apellido}</Text>
+              <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[2]?.nombre + ' ' + empleados[2]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16, marginLeft: 10 }}>{empleados[2].puntos_trabajo}</Text>
+                <Text style={{ color: '#FFFFFF', fontFamily: 'Montserrat-Bold', fontSize: 16, marginLeft: 10 }}>{empleados[2].puntos_trabajo}</Text>
               </View>
               <View style={styles.bar3}>
                 <Text style={styles.barChar}>3</Text>
@@ -41,10 +41,10 @@ const Leaderboard = () => {
             </View>
             <View style={styles.podiumItem}>
               <Avatar source={{ uri: empleados[0]?.foto_perfil }} />
-              <Text style={{ color: '#FFFFFF', marginTop: 5, fontWeight: 'bold' }}>{empleados[0]?.nombre + ' ' + empleados[0]?.apellido}</Text>
+              <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[0]?.nombre + ' ' + empleados[0]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16, marginLeft: 10 }}>{empleados[0].puntos_trabajo}</Text>
+                <Text style={{ color: '#FFFFFF', fontFamily: 'Montserrat-Bold', fontSize: 16, marginLeft: 10 }}>{empleados[0].puntos_trabajo}</Text>
               </View>
               <View style={styles.bar1}>
                 <Text style={styles.barChar}>1</Text>
@@ -52,10 +52,10 @@ const Leaderboard = () => {
             </View>
             <View style={styles.podiumItem}>
               <Avatar source={{ uri: empleados[1]?.foto_perfil }} />
-              <Text style={{ color: '#FFFFFF', marginTop: 5, fontWeight: 'bold' }}>{empleados[1]?.nombre + ' ' + empleados[1]?.apellido}</Text>
+              <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[1]?.nombre + ' ' + empleados[1]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
-                <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16, marginLeft: 10 }}>{empleados[1].puntos_trabajo}</Text>
+                <Text style={{ color: '#FFFFFF', fontFamily: 'Montserrat-Bold', fontSize: 16, marginLeft: 10 }}>{empleados[1].puntos_trabajo}</Text>
               </View>
               <View style={styles.bar2}>
                 <Text style={styles.barChar}>2</Text>
@@ -73,7 +73,7 @@ const Leaderboard = () => {
                   </View>
                   <View style={styles.points}>
                     <Ionicons name="star-outline" size={16} color="white" />
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16, marginLeft: 10 }}>{empleado.puntos_trabajo}</Text>
+                    <Text style={{ color: '#FFFFFF', fontFamily: 'Montserrat-Bold', fontSize: 16, marginLeft: 10 }}>{empleado.puntos_trabajo}</Text>
                   </View>
                 </ListItem.Content>
               </ListItem>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   leaderboardTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     color: '#FFF6EA',
     textAlign: 'center',
     marginBottom: 20,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   barChar: {
     color: '#FFFFFF',
     fontSize: 32,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     textAlign: 'center',
     marginTop: 10,
   },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   listItemPosition: {
     marginRight: 10,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
   },
   listItemTitle: {
     marginLeft: 10,

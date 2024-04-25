@@ -328,7 +328,7 @@ const Report = () => {
 
     title: {
       fontSize: 20,
-      fontWeight: 'bold',
+      fontFamily: 'Montserrat-Bold',
       marginBottom: 10,
       paddingLeft: 15,
       color: '#333',

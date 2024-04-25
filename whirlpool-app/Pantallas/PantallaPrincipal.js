@@ -60,7 +60,7 @@ const PantallaPrincipal = () => {
             <View style={styles.circuloSaludo}></View>
             <View style={[styles.columnContainer, { alignItems: 'flex-start' }]}>
               <Text style={styles.saludo}>Hola,</Text>
-              <Text style={[styles.saludo, { fontWeight: 'bold' }]}>{nombreUsuario}</Text>
+              <Text style={[styles.saludo, { fontFamily: 'Montserrat-Bold' }]}>{nombreUsuario}</Text>
             </View>
           </View>
 
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
 
   textoSeccion: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     marginTop: 20,
     marginBottom: 10,
     marginLeft: 10,
