@@ -30,7 +30,9 @@ const Leaderboard = () => {
           <Text style={styles.leaderboardTitle}>Leaderboard</Text>
           <View style={styles.podium}>
             <View style={styles.podiumItem}>
-              <Avatar source={{ uri: empleados[2]?.foto_perfil }} />
+              <View style={{ borderRadius: 25, overflow: 'hidden' }}>
+                <Avatar source={{ uri: empleados[2]?.foto_perfil }} style={{ width: 50, height: 50 }} />
+              </View>
               <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[2]?.nombre + ' ' + empleados[2]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
@@ -41,7 +43,9 @@ const Leaderboard = () => {
               </View>
             </View>
             <View style={styles.podiumItem}>
-              <Avatar source={{ uri: empleados[0]?.foto_perfil }} />
+              <View style={{ borderRadius: 25, overflow: 'hidden' }}>
+                <Avatar source={{ uri: empleados[0]?.foto_perfil }} style={{ width: 50, height: 50 }} />
+              </View>
               <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[0]?.nombre + ' ' + empleados[0]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
@@ -52,7 +56,9 @@ const Leaderboard = () => {
               </View>
             </View>
             <View style={styles.podiumItem}>
-              <Avatar source={{ uri: empleados[1]?.foto_perfil }} />
+              <View style={{ borderRadius: 25, overflow: 'hidden' }}>
+                <Avatar source={{ uri: empleados[1]?.foto_perfil }} style={{ width: 50, height: 50 }} />
+              </View>
               <Text style={{ color: '#FFFFFF', marginTop: 5, fontFamily: 'Montserrat-Bold' }}>{empleados[1]?.nombre + ' ' + empleados[1]?.apellido}</Text>
               <View style={styles.points}>
                 <Ionicons name="star-outline" size={16} color="white" />
@@ -69,7 +75,9 @@ const Leaderboard = () => {
                 <ListItem.Content style={styles.listItemContent}>
                   <View style={styles.listItemLeft}>
                     <Text style={styles.listItemPosition}>{index + 4}</Text>
-                    <Avatar source={{ uri: empleado.foto_perfil }} />
+                    <View style={{ borderRadius: 25, overflow: 'hidden' }}>
+                      <Avatar source={{ uri: empleado.foto_perfil }} style={{ width: 50, height: 50 }} />
+                    </View>
                     <ListItem.Title style={styles.listItemTitle}>{empleado.nombre + ' ' + empleado.apellido}</ListItem.Title>
                   </View>
                   <View style={styles.points}>
