@@ -94,3 +94,29 @@ def transcribe_audio(request):
     os.remove(wav_path)
 
     return JsonResponse({'transcript': transcript})
+
+
+from django.db.models import Q
+
+@api_view(['GET'])
+def reportes_en_curso(request):
+    # Filtra los reportes con estatus "enviado" o "asignado"
+    reportes = Reporte.objects.filter(Q(status=1) | Q(status=2))
+
+    # Serializa los detalles de los reportes
+    data = []
+    for reporte in reportes:
+        detalle_reporte = {
+            'id_reporte': reporte.id_reporte,
+            'reportador': reporte.reportador.nombre,  # Suponiendo que hay un campo "nombre" en el modelo de reportador
+            'foto_perfil': reporte.reportador.foto_perfil,  # Suponiendo que hay un campo "foto_perfil" en el modelo de reportador
+            'foto_anomalia': reporte.foto.archivo_foto,  # Suponiendo que hay un campo "foto_anomalia" en el modelo de reporte
+            'fecha_reporte': reporte.fecha_reporte
+            'sucursal': reporte.sucursal.nombre_sucursal,  # Suponiendo que hay un campo "nombre" en el modelo de sucursal
+            'motivo': reporte.motivo,
+            'descripcion': reporte.descripcion,
+        }
+        data.append(detalle_reporte)
+
+    return JsonResponse(data, safe=False)
+
