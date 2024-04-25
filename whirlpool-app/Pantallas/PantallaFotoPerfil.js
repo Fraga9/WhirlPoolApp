@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, Alert, StyleSheet, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
 const PantallaFotoPerfil = () => {
     const [profileImage, setProfileImage] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
+          .then(response => {
+            setProfileImage({ uri: response.data.foto_perfil });
+            console.log('hola', response.data.foto_perfil);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, []);
+
+    
+
 
     const loadImageFromGallery = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -19,36 +33,57 @@ const PantallaFotoPerfil = () => {
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
+            base64: true,
         });
 
-        console.log("Resultado de la selección de imagen:", result);
-
-        if (result.cancelled || !result.uri || !result.assets[0].uri) {
+        if (result.cancelled || !result.assets || !result.assets[0].uri) {
             console.log("Selección de imagen cancelada.");
             return;
         }
 
-        console.log("URI de la imagen seleccionada:", result.uri);
+        console.log("URI de la imagen seleccionada:", result.assets[0].uri);
 
-        setProfileImage(result.uri);
+        setProfileImage(result.assets[0].uri);
+    };
 
-        // Crear FormData para enviar la imagen al servidor
+    const updateProfilePicture = async () => {
+        if (!profileImage) {
+            console.log("No image selected.");
+            return;
+        }
+
+        // The id of the employee to update
+        const employeeId = 1;
+
+        // The URL of the API endpoint
+        const url = `http://54.86.33.126:8000/reportes/empleado/${employeeId}/`;
+
+        // Create a new FormData instance
         let formData = new FormData();
-        formData.append('file', {
-            uri: result.assets[0].uri,
-            type: 'image/jpeg',
-            name: 'profile_photo.jpg',
-        });
 
-        // Enviar la imagen al servidor
-        console.log("Enviando imagen al servidor...");
-        axios.post('http://54.86.33.126:8000/reportes/foto/', formData)
-            .then(response => {
-                console.log('Imagen enviada al servidor:', response.data);
-            })
-            .catch(error => {
-                console.error('Error al enviar la imagen al servidor:', error);
-            });
+        // Get the local file as a blob
+        let localUri = profileImage;
+        let filename = localUri.split('/').pop();
+
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        // Add the image to the form data
+        formData.append('foto_perfil', { uri: localUri, name: filename, type });
+
+        // Send the PATCH request
+        axios.patch(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        .then(response => {
+            console.log('Employee updated:', response.data);
+        })
+        .catch(error => {
+            console.error('Error updating employee:', error);
+        });
     };
 
     return (
@@ -62,9 +97,15 @@ const PantallaFotoPerfil = () => {
             <TouchableOpacity style={[styles.button, { backgroundColor: '#D9D9D9', marginTop: 60 }]} onPress={loadImageFromGallery}>
                 <Text style={styles.texto}>Seleccionar desde la galería</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, { backgroundColor: '#eeb111', marginTop: 60 }]} onPress={updateProfilePicture}>
+                <Text style={styles.texto}>Actualizar foto de perfil</Text>
+            </TouchableOpacity>
         </View>
     );
 };
+
+
 
 const styles = StyleSheet.create({
     container: {

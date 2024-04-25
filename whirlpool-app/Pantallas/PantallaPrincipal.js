@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StatusBar, Image, StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, Image, StyleSheet, Text, View, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import CircleWithImage from '../ScriptsComponentes/CircleWithImage';
 import DetallesReporte from '../ScriptsComponentes/DetallesReporte';
@@ -12,6 +12,7 @@ import PantallaSeleccionPersonaje from './PantallaSeleccionPersonaje';
 import PantallaAnomalias from './PantallaAnomalias';
 import PantallaFotoPerfil from './PantallaFotoPerfil';
 import Reporte from './PantallaReporte';
+import axios from 'axios';
 
 // Parámetros de prueba
 const nombreUsuario = "Miguel";
@@ -34,6 +35,20 @@ const topRoundedRectangleHeight = topSectionHeight * 0.55;
 
 const PantallaPrincipal = () => {
   const navigation = useNavigation();
+  const [fotoEmpleado, setFotoEmpleado] = useState(require("../images/iconoempleado.png"));
+
+  useEffect(() => {
+    axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
+      .then(response => {
+        setFotoEmpleado({ uri: response.data.foto_perfil });
+        console.log(response.data.foto_perfil);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+
 
   return (
     <View style={styles.container}>
@@ -53,8 +68,13 @@ const PantallaPrincipal = () => {
             <View style={[styles.columnContainer, { justifyContent: 'flex-end' }, { alignItems: 'flex-end' }, { height: '100%' }]}>
               <CircleWithImage color='#6D6D6C' imageSource={personajePrincipal.foto} imageHeight='140%' imageWidth='140%' onPress={() => navigation.navigate('PantallaSeleccionPersonaje')} animate={true} />
             </View>
-            <View style={[styles.columnContainer, { justifyContent: 'flex-start' }, { alignItems: 'center' }, { height: '100%' }]}>
-              <CircleWithImage color='#eeb111' imageSource={fotoEmpleado} imageHeight='70%' imageWidth='70%' onPress={() => navigation.navigate('PantallaFotoPerfil')} animate={false} />
+            <View style={[styles.columnContainer, { justifyContent: 'flex-start', alignItems: 'center', height: '100%' }]}>
+              <TouchableOpacity onPress={() => navigation.navigate('PantallaFotoPerfil')}>
+                <Image
+                  source={fotoEmpleado}
+                  style={styles.profilePic}
+                />
+              </TouchableOpacity>
               <Text>100 puntos</Text>
             </View>
             <View style={[styles.columnContainer, { justifyContent: 'flex-end' }, { alignItems: 'flex-start' }, { height: '100%' }]}>
@@ -179,6 +199,13 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     width: '100%',
+  },
+
+  profilePic: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    overflow: 'hidden',
   },
 });
 
