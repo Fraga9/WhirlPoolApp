@@ -7,6 +7,7 @@ from django.conf import settings
 from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
 from .views import transcribe_audio
 from .views import reportes_en_curso
+from .views import personajes_empleado
 
 router = routers.SimpleRouter()
 
@@ -25,7 +26,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('docs/', include_docs_urls(title='Documentación WhirlPool API')),
     path('transcribe/', transcribe_audio, name='transcribe'),
-    path('reportes_pendientes/', reportes_en_curso, name='reportes_pendientes')
+    path('reportes_pendientes/', reportes_en_curso, name='reportes_pendientes'),
+    path('personajes_empleado/<int:id_empleado>/', personajes_empleado, name='personajes_empleado')
 ]
 
 
