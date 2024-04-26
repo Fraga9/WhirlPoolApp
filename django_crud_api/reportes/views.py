@@ -108,6 +108,7 @@ def reportes_en_curso(request):
     for reporte in reportes:
         detalle_reporte = {
             'id_reporte': reporte.id_reporte,
+            'status': reporte.status.estatus,
             'reportador': reporte.reportador.nombre,  # Suponiendo que hay un campo "nombre" en el modelo de reportador
             'foto_perfil': reporte.reportador.foto_perfil,
             'foto_reporte': reporte.foto,
