@@ -23,5 +23,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('docs/', include_docs_urls(title='Documentación WhirlPool API')),
     path('transcribe/', transcribe_audio, name='transcribe'),
-    path('reportes_prendientes/', reportes_en_curso, name='reportes_pendientes')
+    path('reportes_pendientes/', reportes_en_curso, name='reportes_pendientes')
 ]
