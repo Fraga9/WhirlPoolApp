@@ -73,16 +73,19 @@ const PantallaFotoPerfil = () => {
         let type = match ? `image/${match[1]}` : `image`;
 
         // Add the image to the form data
+        console.log("Adding image to form data:", { uri: localUri, name: filename, type });
         formData.append('foto_perfil', { uri: localUri, name: filename, type });
 
-        // Send the PATCH request
-        axios.patch(url, formData, {
+        fetch(url, {
+            method: 'PATCH',
+            body: formData,
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then(response => {
-                console.log('Employee updated:', response.data);
+            .then(response => response.json())
+            .then(data => {
+                console.log('Employee updated:', data);
             })
             .catch(error => {
                 console.error('Error updating employee:', error);

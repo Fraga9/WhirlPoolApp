@@ -2,6 +2,8 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.routers import SimpleRouter
 from rest_framework.documentation import include_docs_urls
+from django.conf.urls.static import static
+from django.conf import settings
 from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
 from .views import transcribe_audio
 from .views import reportes_en_curso
@@ -25,3 +27,6 @@ urlpatterns = [
     path('transcribe/', transcribe_audio, name='transcribe'),
     path('reportes_pendientes/', reportes_en_curso, name='reportes_pendientes')
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -23,15 +23,11 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EmpleadoSerializer(serializers.ModelSerializer):
-    foto_perfil = serializers.SerializerMethodField()
+    foto_perfil = serializers.ImageField(max_length=None, use_url=True, allow_null=True, required=False)
     class Meta:
         model = Empleado
         fields = '__all__'
-    def get_foto_perfil(self, obj):
-        if obj.foto_perfil:
-            return self.context['request'].build_absolute_uri(obj.foto_perfil.url)
-        else:
-            return None
+    
 
 
 class ReporteSerializer(serializers.ModelSerializer):
