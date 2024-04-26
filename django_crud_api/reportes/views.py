@@ -121,3 +121,22 @@ def reportes_en_curso(request):
 
     return JsonResponse(data, safe=False)
 
+
+@api_view(['GET'])
+def personajes_empleado(request, id_empleado):
+    try:
+        personajes = EmpleadoPersonaje.objects.filter(empleado=id_empleado)
+        data = []
+        for personaje in personajes:
+            personaje_data = {
+                'id_empleado': personaje.empleado,
+                'id_personaje': personaje.personaje,
+                'nombre_personaje': personaje.personaje.nombre_personaje,
+                'nivel_actual': personaje.nivel_actual,
+            }
+            data.append(personaje_data)
+        return Response(data)
+    except EmpleadoPersonaje.DoesNotExist:
+        return Response({'error': 'No se encontraron datos para el empleado especificado'}, status=404)
+
+
