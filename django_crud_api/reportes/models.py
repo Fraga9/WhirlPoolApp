@@ -15,7 +15,7 @@ class Estatus(models.Model):
 class Foto(models.Model):
     id_foto = models.AutoField(primary_key=True)
     archivo_foto = models.ImageField(upload_to='fotos/', default='fotos/default.jpg')
-    reporte = models.ForeignKey('Reporte', on_delete=models.CASCADE, related_name='fotos')
+    reporte = models.ForeignKey('Reporte', on_delete=models.CASCADE, related_name='fotos', null=True)
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField(primary_key=True)
