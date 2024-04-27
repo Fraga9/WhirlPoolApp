@@ -102,7 +102,7 @@ from django.conf import settings
 from django.templatetags.static import static
 
 @api_view(['GET'])
-def reportes_en_curso(request):
+def reportes_pendientes(request):
     # Filtra los reportes con estatus "enviado" o "asignado"
     reportes = Reporte.objects.filter(Q(status=3) | Q(status=4))
 
