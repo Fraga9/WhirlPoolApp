@@ -34,10 +34,11 @@ class EmpleadoViewSet(viewsets.ModelViewSet):
     serializer_class = EmpleadoSerializer
 
     def list(self, request, *args, **kwargs):
+        queryset = Empleado.objects.all()
         rol = request.query_params.get('rol', None)
         if rol is not None:
-            self.queryset = self.queryset.filter(rol=rol)
-        serializer = EmpleadoSerializer(self.queryset, many=True, context={'request': request})
+            queryset = queryset.filter(rol=rol)
+        serializer = EmpleadoSerializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
 class ReporteViewSet(viewsets.ModelViewSet):
