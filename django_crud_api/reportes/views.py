@@ -109,11 +109,11 @@ def reportes_en_curso(request):
         detalle_reporte = {
             'id_reporte': reporte.id_reporte,
             'status': reporte.status.estatus,
-            'reportador': reporte.reportador.nombre,  # Suponiendo que hay un campo "nombre" en el modelo de reportador
-            'foto_perfil': reporte.reportador.foto_perfil,
-            'foto_reporte': reporte.foto,
+            'reportador': reporte.reportador.nombre,
+            'foto_perfil': reporte.reportador.foto_perfil.url,
+            'foto_reporte': reporte.foto.url,
             'fecha_reporte': reporte.fecha_reporte,
-            'sucursal': reporte.sucursal.nombre_sucursal,  # Suponiendo que hay un campo "nombre" en el modelo de sucursal
+            'sucursal': reporte.sucursal.nombre_sucursal, 
             'motivo': reporte.motivo,
             'descripcion': reporte.descripcion,
         }
