@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 def get_default_status():
-    return Estatus.objects.get(id=3)
+    return Estatus.objects.get(id_status=3)
 
 
 class Estatus(models.Model):
