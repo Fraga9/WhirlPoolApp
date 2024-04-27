@@ -98,6 +98,8 @@ def transcribe_audio(request):
 
 
 from django.db.models import Q
+from django.conf import settings
+from django.templatetags.static import static
 
 @api_view(['GET'])
 def reportes_en_curso(request):
@@ -111,16 +113,17 @@ def reportes_en_curso(request):
             'id_reporte': reporte.id_reporte,
             'status': reporte.status.estatus,
             'reportador': reporte.reportador.nombre,
-            'foto_perfil': reporte.reportador.foto_perfil.url,
-            'foto_reporte': reporte.foto.url,
+            'foto_perfil': request.build_absolute_uri(static(reporte.reportador.foto_perfil)),
+            'foto_reporte': request.build_absolute_uri(static(reporte.foto)),
             'fecha_reporte': reporte.fecha_reporte,
-            'sucursal': reporte.sucursal.nombre_sucursal, 
+            'sucursal': reporte.sucursal.nombre_sucursal,
             'motivo': reporte.motivo,
             'descripcion': reporte.descripcion,
         }
         data.append(detalle_reporte)
 
     return JsonResponse(data, safe=False)
+
 
 
 @api_view(['GET'])
