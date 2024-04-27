@@ -135,7 +135,7 @@ def personajes_empleado(request, id_empleado):
                 'nivel_actual': personaje.nivel_actual,
             }
             data.append(personaje_data)
-        return Response(data)
+        return JsonResponse(data)
     except EmpleadoPersonaje.DoesNotExist:
         return Response({'error': 'No se encontraron datos para el empleado especificado'}, status=404)
 
