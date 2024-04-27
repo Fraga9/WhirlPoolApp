@@ -2,6 +2,10 @@ from django.db import models
 from django.utils import timezone
 
 
+def get_default_status():
+    return Estatus.objects.get(id=3)
+
+
 class Estatus(models.Model):
     id_status = models.AutoField(primary_key=True)
     estatus = models.CharField(max_length=20, choices=[('Cancelado', 'Cancelado'), ('Finalizado', 'Finalizado'), ('Enviado', 'Enviado'), ('Asignado', 'Asignado')])
@@ -49,14 +53,14 @@ class Reporte(models.Model):
     comentario = models.CharField(max_length=255, null=True, blank=True)
     reportador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_reportador')
     fecha_reporte = models.DateTimeField(auto_now_add=True)
-    asignador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_asignador')
-    fecha_asignacion = models.DateTimeField(auto_now_add=True)
-    promotor = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_promotor')
-    fecha_atendido = models.DateTimeField(auto_now_add=True)
-    puntaje = models.IntegerField()
+    asignador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_asignador', null=True, blank=True)
+    fecha_asignacion = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    promotor = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_promotor', null=True, blank=True)
+    fecha_atendido = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    puntaje = models.IntegerField(null=True, blank=True)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='reportes')
     foto = models.ForeignKey(Foto, on_delete=models.CASCADE, related_name='reportes')
-    status = models.ForeignKey(Estatus, on_delete=models.CASCADE, related_name='reportes')
+    status = models.ForeignKey(Estatus, on_delete=models.CASCADE, related_name='reportes', default=get_default_status)
     def __str__(self):
         return  str(self.id_reporte) + '. ' + self.motivo
 
