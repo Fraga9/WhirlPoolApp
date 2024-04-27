@@ -5,9 +5,8 @@ from rest_framework.documentation import include_docs_urls
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
-from .views import transcribe_audio
-from .views import reportes_en_curso
-from .views import personajes_empleado
+from .views import transcribe_audio, reportes_en_curso, personajes_empleado, fotos_reporte
+
 
 router = routers.SimpleRouter()
 
@@ -28,6 +27,7 @@ urlpatterns = [
     path('transcribe/', transcribe_audio, name='transcribe'),
     path('reportes_pendientes/', reportes_en_curso, name='reportes_pendientes'),
     path('personajes_empleado/<int:id_empleado>/', personajes_empleado, name='personajes_empleado')
+    path('reporte/<int:reporte_id>/fotos/', fotos_reporte, name='fotos_reporte')
 ]
 
 

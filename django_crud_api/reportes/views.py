@@ -139,4 +139,11 @@ def personajes_empleado(request, id_empleado):
     except EmpleadoPersonaje.DoesNotExist:
         return Response({'error': 'No se encontraron datos para el empleado especificado'}, status=404)
 
-
+def fotos_reporte(request, reporte_id):
+    reporte = Reporte.objects.get(id_reporte=reporte_id)
+    
+    fotos = reporte.fotos.all()
+    
+    fotos_urls = [foto.archivo_foto.url for foto in fotos]
+    
+    return JsonResponse({'fotos': fotos_urls})

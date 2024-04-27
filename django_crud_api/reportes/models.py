@@ -15,6 +15,7 @@ class Estatus(models.Model):
 class Foto(models.Model):
     id_foto = models.AutoField(primary_key=True)
     archivo_foto = models.ImageField(upload_to='fotos/', default='fotos/default.jpg')
+    reporte = models.ForeignKey('Reporte', on_delete=models.CASCADE, related_name='fotos')
 
 class Sucursal(models.Model):
     id_sucursal = models.AutoField(primary_key=True)
@@ -59,7 +60,6 @@ class Reporte(models.Model):
     fecha_atendido = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     puntaje = models.IntegerField(null=True, blank=True)
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name='reportes')
-    foto = models.ForeignKey(Foto, on_delete=models.CASCADE, related_name='reportes')
     status = models.ForeignKey(Estatus, on_delete=models.CASCADE, related_name='reportes', default=get_default_status)
     def __str__(self):
         return  str(self.id_reporte) + '. ' + self.motivo
