@@ -114,7 +114,7 @@ def reportes_pendientes(request):
             'status': reporte.status.estatus,
             'reportador': reporte.reportador.nombre,
             'foto_perfil': request.build_absolute_uri(static(reporte.reportador.foto_perfil)),
-            'foto_reporte': request.build_absolute_uri(static(reporte.foto)),
+            'fotos_reporte': [request.build_absolute_uri(static(foto.archivo_foto.url)) for foto in reporte.fotos.all()],
             'fecha_reporte': reporte.fecha_reporte,
             'sucursal': reporte.sucursal.nombre_sucursal,
             'motivo': reporte.motivo,
