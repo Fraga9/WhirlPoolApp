@@ -117,282 +117,331 @@ const Report = () => {
     } catch (error) {
       console.error('Error al detener la grabación:', error);
     }
-    };
+  };
 
-    const formatTime = (seconds) => {
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-    };
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
-    const handleAttachImage = async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      if (status === 'granted') {
-        setCameraOpen(true);
-      } else {
-        Alert.alert('Camera permission not granted');
-      }
-    };
+  const handleAttachImage = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status === 'granted') {
+      setCameraOpen(true);
+    } else {
+      Alert.alert('Camera permission not granted');
+    }
+  };
 
-    const takePicture = async () => {
-      if (cameraRef.current) {
-        const options = { quality: 1, base64: true, skipProcessing: false };
-        const data = await cameraRef.current.takePictureAsync(options);
-        setPhoto(data.uri);
-        setCameraOpen(false);
-      }
-    };
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      const options = { quality: 1, base64: true, skipProcessing: false };
+      const data = await cameraRef.current.takePictureAsync(options);
+      setPhoto(data.uri);
+      setCameraOpen(false);
+    }
+  };
 
-    const toggleFlash = () => {
-      setFlashMode(
-        flashMode === Camera.Constants.FlashMode.off
-          ? Camera.Constants.FlashMode.on
-          : Camera.Constants.FlashMode.off
-      );
-    };
-
-
-
-
-    const handleLocation = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permiso de acceso a la ubicación denegado');
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location.coords.latitude + ', ' + location.coords.longitude);
-      console.log(location);
-    };
-
-    const handleDate = (event, selectedDate) => {
-      const currentDate = selectedDate || date;
-      setShow(Platform.OS === 'ios');
-      setDate(currentDate);
-    };
-
-    const handleSubmit = () => {
-      // Aquí puedes manejar la lógica para enviar el reporte :v
-    };
-
-    return (
-      <View style={styles.container}>
-        {cameraOpen ? (
-          <Camera style={{ flex: 1 }} type={Camera.Constants.Type.back} flashMode={flashMode} ref={cameraRef}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                margin: 20,
-              }}>
-              <TouchableOpacity
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',
-                }}
-                onPress={toggleFlash}>
-                <Ionicons name={flashMode === Camera.Constants.FlashMode.on ? "flash" : "flash-off"} size={30} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',
-                }}
-                onPress={takePicture}>
-                <View style={{
-                  borderWidth: 2,
-                  borderRadius: 50,
-                  borderColor: 'white',
-                  height: 50,
-                  width: 50,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                  <View style={{
-                    borderWidth: 2,
-                    borderRadius: 50,
-                    borderColor: 'white',
-                    height: 40,
-                    width: 40,
-                    backgroundColor: 'white'
-                  }} >
-                  </View>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                  backgroundColor: 'transparent',
-                }}
-                onPress={() => setCameraOpen(false)}>
-                <Ionicons name="close-circle" size={40} color="white" />
-              </TouchableOpacity>
-            </View>
-          </Camera>
-        ) : (
-          <>
-            <Text style={styles.title}>Fecha de reporte</Text>
-            <Input
-              placeholder='Fecha'
-              value={date.toISOString().split('T')[0]}
-              onFocus={() => setShow(true)}
-              inputContainerStyle={styles.inputContainer}
-              inputStyle={styles.input}
-            />
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={'date'}
-                display="default"
-                onChange={handleDate}
-              />
-            )}
-            <Text style={styles.title}>Motivo</Text>
-            <Picker
-              selectedValue={reason}
-              style={styles.picker}
-              onValueChange={(itemValue, itemIndex) => setReason(itemValue)}
-            >
-              <Picker.Item label="Falta de inventario" value="Inventario" />
-              <Picker.Item label="Otro" value="js" />
-            </Picker>
-            <Text style={styles.title}>Ubicación</Text>
-            <Picker
-              selectedValue={location}
-              style={styles.picker}
-              onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
-            >
-              <Picker.Item label="Home Depot Nogalar" value="Home Depot Nogalar" />
-              <Picker.Item label="Otro" value="js" />
-            </Picker>
-            <Text style={styles.title}>Descripción del reporte</Text>
-            <Input
-              placeholder='Descripción del reporte'
-              value={description}
-              onChangeText={setDescription}
-              multiline
-              inputContainerStyle={[styles.inputContainer, { height: 150 }]}
-              inputStyle={[styles.input, { height: 150 }]}
-            />
-
-
-            <TouchableOpacity style={[styles.button, { flexDirection: 'row' }]} onPress={handleAttachImage}>
-              <Ionicons name="camera" size={24} color="white" />
-              <Text style={styles.buttonText}>Tomar fotografía</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: isRecording ? '#dd7c02' : '#f29f05', flexDirection: 'row', justifyContent: 'space-between' }]}
-              onPress={isRecording ? stopRecording : startRecording}
-            > 
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}> 
-                <Ionicons name={isRecording ? 'stop-circle' : 'mic'} size={24} color="white" />
-                <Text style={styles.buttonText}>{isRecording ? 'Detener grabación' : 'Grabar audio'}</Text>
-              </View>
-              {isRecording && <Text style={[styles.timer, { color: 'white' }]}>{formatTime(duration)}</Text>}
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={[styles.button, styles.submitButton]} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Enviar reporte</Text>
-            </TouchableOpacity>
-
-
-          </>
-        )}
-      </View>
+  const toggleFlash = () => {
+    setFlashMode(
+      flashMode === Camera.Constants.FlashMode.off
+        ? Camera.Constants.FlashMode.on
+        : Camera.Constants.FlashMode.off
     );
   };
 
 
 
-  const styles = StyleSheet.create({
 
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: '#ffffff',
-      margin: 10,
-      borderRadius: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
+  const handleLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permiso de acceso a la ubicación denegado');
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location.coords.latitude + ', ' + location.coords.longitude);
+    console.log(location);
+  };
 
-    title: {
-      fontSize: 20,
-      fontFamily: 'Montserrat-Bold',
-      marginBottom: 10,
-      paddingLeft: 15,
-      color: '#333',
-      letterSpacing: 0.5,
-    },
+  const handleDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
 
-    inputContainer: {
-      marginBottom: 5,
-      borderWidth: 1,
-      borderColor: '#ddd',
-      padding: 10,
-      borderRadius: 10,
-      backgroundColor: '#f9f9f9',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    },
+  const handleSubmit = () => {
 
-    input: {
-      fontSize: 16,
-    },
+    console.log('Motivo:', reason);
+    console.log('Ubicación:', location);
+    console.log('Descripción:', description);
+    const reportData = {
+      motivo: reason,
+      descripcion: description,
+      sucursal: 1,
+      reportador: 1,
+    }
 
-    button: {
-      borderRadius: 10,
-      marginBottom: 10,
-      marginHorizontal: 10,
-      backgroundColor: '#f29f05',
-      padding: 10,
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
+    fetch('http://54.86.33.126:8000/reportes/reporte/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reportData),
+    })
 
-    submitButton: {
-      backgroundColor: '#dd7c02',
-    },
-
-    buttonText: {
-      color: 'white',
-      marginLeft: 10,
-      fontSize: 16,
-    },
-
-    pickerContainer: {
-      borderWidth: 2,
-      borderColor: '#aaa',
-      padding: 10,
-      borderRadius: 10,
-      backgroundColor: '#f9f9f9',
-      marginBottom: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.35,
-      shadowRadius: 4,
-      elevation: 6,
-      overflow: 'hidden',
-    },
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 
 
 
+    let formDataFoto = new FormData();
+    formDataFoto.append('archivo_foto', {
+      uri: photo,
+      type: 'image/jpeg',
+      name: 'foto.jpg',
+    });
+    console.log(photo);
+    urlFoto = 'http://54.86.33.126:8000/reportes/foto/'
+
+    fetch(urlFoto, {
+      method: 'POST',
+      body: formDataFoto,
+    })
+
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
+
+  return (
+    <View style={styles.container}>
+      {cameraOpen ? (
+        <Camera style={{ flex: 1 }} type={Camera.Constants.Type.back} flashMode={flashMode} ref={cameraRef}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              margin: 20,
+            }}>
+            <TouchableOpacity
+              style={{
+                alignSelf: 'flex-end',
+                alignItems: 'center',
+                backgroundColor: 'transparent',
+              }}
+              onPress={toggleFlash}>
+              <Ionicons name={flashMode === Camera.Constants.FlashMode.on ? "flash" : "flash-off"} size={30} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                alignSelf: 'flex-end',
+                alignItems: 'center',
+                backgroundColor: 'transparent',
+              }}
+              onPress={takePicture}>
+              <View style={{
+                borderWidth: 2,
+                borderRadius: 50,
+                borderColor: 'white',
+                height: 50,
+                width: 50,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <View style={{
+                  borderWidth: 2,
+                  borderRadius: 50,
+                  borderColor: 'white',
+                  height: 40,
+                  width: 40,
+                  backgroundColor: 'white'
+                }} >
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                alignSelf: 'flex-end',
+                alignItems: 'center',
+                backgroundColor: 'transparent',
+              }}
+              onPress={() => setCameraOpen(false)}>
+              <Ionicons name="close-circle" size={40} color="white" />
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      ) : (
+        <>
+          <Text style={styles.title}>Fecha de reporte</Text>
+          <Input
+            placeholder='Fecha'
+            value={date.toISOString().split('T')[0]}
+            onFocus={() => setShow(true)}
+            inputContainerStyle={styles.inputContainer}
+            inputStyle={styles.input}
+          />
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={'date'}
+              display="default"
+              onChange={handleDate}
+            />
+          )}
+          <Text style={styles.title}>Motivo</Text>
+          <Picker
+            selectedValue={reason}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) => setReason(itemValue)}
+          >
+            <Picker.Item label="Falta de inventario" value="Falta de inventario" />
+            <Picker.Item label="Otro" value="js" />
+          </Picker>
+          <Text style={styles.title}>Ubicación</Text>
+          <Picker
+            selectedValue={location}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
+          >
+            <Picker.Item label="Home Depot Nogalar" value="1" />
+            <Picker.Item label="Otro" value="js" />
+          </Picker>
+          <Text style={styles.title}>Descripción del reporte</Text>
+          <Input
+            placeholder='Descripción del reporte'
+            value={description}
+            onChangeText={setDescription}
+            multiline
+            inputContainerStyle={[styles.inputContainer, { height: 150 }]}
+            inputStyle={[styles.input, { height: 150 }]}
+          />
 
 
-  });
+          <TouchableOpacity style={[styles.button, { flexDirection: 'row' }]} onPress={handleAttachImage}>
+            <Ionicons name="camera" size={24} color="white" />
+            <Text style={styles.buttonText}>Tomar fotografía</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: isRecording ? '#dd7c02' : '#f29f05', flexDirection: 'row', justifyContent: 'space-between' }]}
+            onPress={isRecording ? stopRecording : startRecording}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Ionicons name={isRecording ? 'stop-circle' : 'mic'} size={24} color="white" />
+              <Text style={styles.buttonText}>{isRecording ? 'Detener grabación' : 'Grabar audio'}</Text>
+            </View>
+            {isRecording && <Text style={[styles.timer, { color: 'white' }]}>{formatTime(duration)}</Text>}
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.button, styles.submitButton]} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Enviar reporte</Text>
+          </TouchableOpacity>
 
 
-  export default Report;
+        </>
+      )}
+    </View>
+  );
+};
+
+
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#ffffff',
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
+  title: {
+    fontSize: 20,
+    fontFamily: 'Montserrat-Bold',
+    marginBottom: 10,
+    paddingLeft: 15,
+    color: '#333',
+    letterSpacing: 0.5,
+  },
+
+  inputContainer: {
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#f9f9f9',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
+  input: {
+    fontSize: 16,
+  },
+
+  button: {
+    borderRadius: 10,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#f29f05',
+    padding: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
+  submitButton: {
+    backgroundColor: '#dd7c02',
+  },
+
+  buttonText: {
+    color: 'white',
+    marginLeft: 10,
+    fontSize: 16,
+  },
+
+  pickerContainer: {
+    borderWidth: 2,
+    borderColor: '#aaa',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#f9f9f9',
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    elevation: 6,
+    overflow: 'hidden',
+  },
+
+
+
+
+
+});
+
+
+export default Report;
