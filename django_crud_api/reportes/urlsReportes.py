@@ -5,7 +5,7 @@ from rest_framework.documentation import include_docs_urls
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
-from .views import transcribe_audio, reportes_en_curso, personajes_empleado, fotos_reporte
+from .views import transcribe_audio, reportes_pendientes, personajes_empleado, fotos_reporte
 
 
 router = routers.SimpleRouter()
