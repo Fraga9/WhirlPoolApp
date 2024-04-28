@@ -3,29 +3,26 @@ import { Image, StyleSheet, Text, View, ScrollView, Dimensions, Animated, Toucha
 import TarjetaAnomalia from '../ScriptsComponentes/TarjetaAnomalia';
 
 const PantallaAnomalias = () => {
-    return(
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.titulo}>Catálogo de anomalías</Text>
-            <View style={styles.rowContainer}>
-                <View style={styles.columnContainer}>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                </View>
-                <View style={styles.columnContainer}>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                    <TarjetaAnomalia/>
-                </View>
-            </View>
-        </ScrollView>
-    )
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={styles.titulo}>Catálogo de anomalías</Text>
+      <View style={styles.rowContainer}>
+        <View style={styles.columnContainer}>
+          <TarjetaAnomalia nombreAnomalia={"Falta de inventario"} />
+          <TarjetaAnomalia nombreAnomalia={"Rayón o abolladura"} />
+          <TarjetaAnomalia nombreAnomalia={"Mal etiquetado"} />
+          <TarjetaAnomalia />
+
+        </View>
+        <View style={styles.columnContainer}>
+          <TarjetaAnomalia nombreAnomalia={"Producto escondido"} />
+          <TarjetaAnomalia nombreAnomalia={"Fuera de categoría"} />
+          <TarjetaAnomalia />
+          <TarjetaAnomalia />
+        </View>
+      </View>
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -35,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   columnContainer: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, ScrollView, Dimensions, Animated, TouchableOpacity } from 'react-native';
 
-//Parámetros de prueba
-const nombreAnomalia = "Producto dañado";
+
 
 const { height, width } = Dimensions.get('window');
 
@@ -11,16 +10,15 @@ const roundedRectangleHeight = containerHeight * 0.8;
 const blackRectangleHeight = containerHeight * 0.2;
 
 
-const TarjetaAnomalia = () => {
-    return(
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.roundedRectangle}/>
-            <View style={styles.bottomRectangle}>
-                <Text style={styles.nombreAnomalia}>{nombreAnomalia}</Text>
-            </View>
-
-        </View>
-    )
+const TarjetaAnomalia = ({ nombreAnomalia }) => {
+  return(
+      <View style={styles.container}>
+          <TouchableOpacity style={styles.roundedRectangle}/>
+          <View style={styles.bottomRectangle}>
+              <Text style={styles.nombreAnomalia}>{nombreAnomalia}</Text>
+          </View>
+      </View>
+  )
 }
 
 const styles = StyleSheet.create({
