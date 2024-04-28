@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   nombreAnomalia: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     color: 'black',
   },
   numeroAnomalia: {

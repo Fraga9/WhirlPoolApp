@@ -20,9 +20,6 @@ const PantallaFotoPerfil = () => {
     }, []);
 
 
-
-
-
     const loadImageFromGallery = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         console.log("Estado de los permisos de la galería:", status)
@@ -61,52 +58,32 @@ const PantallaFotoPerfil = () => {
         // The URL of the API endpoint
         const url = `http://54.86.33.126:8000/reportes/empleado/${employeeId}/`;
 
-        // Convert the image URI to a blob
-        const response = await fetch(profileImage.uri);
-        const blob = await response.blob();
-
-        console.log("Blob:", blob);
-
         // Create a new FormData instance
         let formData = new FormData();
 
-        // Define the filename
-        const filename = profileImage.uri.split('/').pop();
+        // Get the local file as a blob
+        let localUri = profileImage.uri;
+        let filename = localUri.split('/').pop();
 
-        let file = new File([blob], filename, { type: 'image/png' });
-
-        console.log("File:", file);
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
 
         // Add the image to the form data
-        console.log("Adding image to form data:", { uri: profileImage.uri, name: filename, type: 'image/jpeg' });
-        formData.append('foto_perfil', file, 'nombre_archivo.png');
+        formData.append('foto_perfil', { uri: localUri, name: filename, type });
 
-        axios({
-            method: 'patch',
-            url: url,
-            data: formData,
+        // Send the PATCH request
+        axios.patch(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
-            .then((response) => {
+            .then(response => {
                 console.log('Employee updated:', response.data);
                 setProfileImage({ uri: response.data.foto_perfil });
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error updating employee:', error);
-                if (error.response) {
-                    console.log('Response data:', error.response.data);
-                    console.log('Response status:', error.response.status);
-                    console.log('Response headers:', error.response.headers);
-                }
-                else if (error.request) {
-                    console.log('Request:', error.request);
-                }
-                else {
-                    console.log('Error:', error.message);
-                }
-                console.log('Error config:', error.config);
             });
     };
 

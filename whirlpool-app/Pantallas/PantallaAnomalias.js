@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     color: 'black',
     margin: 30
   }

@@ -55,7 +55,7 @@ function NavigationBar() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Main" component={MainTabNavigator} />
-      <Stack.Screen name="Anomalías" component={PantallaAnomalias} />
+      <Stack.Screen name="PantallaAnomalias" component={PantallaAnomalias} />
       <Stack.Screen name="PantallaFotoPerfil" component={PantallaFotoPerfil} />
       <Stack.Screen name="PantallaSeleccionPersonaje" component={PantallaSeleccionPersonaje} />
     </Stack.Navigator>

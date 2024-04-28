@@ -11,11 +11,11 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import PantallaSeleccionPersonaje from './PantallaSeleccionPersonaje';
 import PantallaAnomalias from './PantallaAnomalias';
 import PantallaFotoPerfil from './PantallaFotoPerfil';
-import Reporte from './PantallaReporte';
+
 import axios from 'axios';
 
 // Parámetros de prueba
-const nombreUsuario = "Miguel";
+const nombreUsuario = "Héctor";
 const status = 4;
 const personajePrincipal = PersonajesData[0];
 const fotoEmpleado = require("../images/iconoempleado.png");
@@ -37,16 +37,18 @@ const PantallaPrincipal = () => {
   const navigation = useNavigation();
   const [fotoEmpleado, setFotoEmpleado] = useState(require("../images/iconoempleado.png"));
 
-  useEffect(() => {
-    axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
-      .then(response => {
-        setFotoEmpleado({ uri: response.data.foto_perfil });
-        console.log(response.data.foto_perfil);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
+        .then(response => {
+          setFotoEmpleado({ uri: response.data.foto_perfil });
+          console.log(response.data.foto_perfil);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, [])
+  );
 
 
 
