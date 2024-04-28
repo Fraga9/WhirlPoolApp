@@ -166,13 +166,13 @@ def personajes_empleado(request, id_empleado):
         data = []
         for personaje in personajes:
             personaje_data = {
-                "id_empleado": personaje.empleado.id,
-                "id_personaje": personaje.personaje.id,
+                "id_empleado": personaje.empleado.id_empleado,
+                "id_personaje": personaje.personaje.id_personaje,
                 "nombre_personaje": personaje.personaje.nombre_personaje,
                 "nivel_actual": personaje.nivel_actual,
             }
             data.append(personaje_data)
-        return JsonResponse(data, safe=False)  # Set 'safe' to False
+        return JsonResponse(data, safe=False)  
     except EmpleadoPersonaje.DoesNotExist:
         return Response(
             {"error": "No se encontraron datos para el empleado especificado"},
