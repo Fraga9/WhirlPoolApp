@@ -10,7 +10,7 @@ const imagenFondo = require("../images/fondos/fondo3.png");
 const puntosPersonajeReporte = 150;
 
 const { height, width } = Dimensions.get('window');
-const topSectionHeight = height * 0.35;
+const topSectionHeight = height * 0.4;
 
 const PantallaSeleccionPersonaje = () => {
   const [personajeSeleccionado, setPersonajeSeleccionado] = useState(PersonajesData[0]);
@@ -65,7 +65,7 @@ const PantallaSeleccionPersonaje = () => {
               <View style={[styles.rowContainer, {flex: 0.9}]}>
                 <Animated.Image source={personajeSeleccionado.foto} style={[styles.personajeEscogido, animatedStyle]} />
               </View>
-              <View style={[styles.rowContainer, {justifyContent: 'space-between', flex: 0.1, paddingHorizontal: 50, marginVertical: 10}]}>
+              <View style={[styles.rowContainer, {justifyContent: 'flex-start', alignItems: 'center', flex: 0.2, paddingHorizontal: 90, marginVertical: 10}]}>
                 {Array(personajeSeleccionado.rareza).fill().map((_, index) => (
                   <FontAwesome key={index} name="star" size={20} color="gold" />
                 ))}
@@ -76,12 +76,12 @@ const PantallaSeleccionPersonaje = () => {
             <View style={[styles.columnContainer, {flex: 0.4}]}>
               <Text style={[styles.titulo, {fontSize: 15}]}>Nivel {personajeSeleccionado.mejoras}</Text>
               <View style={{paddingHorizontal: 25}}>
-                <Text style={[{fontSize:15, fontWeight: 'bold', marginVertical: 30, textAlign: 'center'}]}>
+                <Text style={[{fontSize:15, fontFamily: 'Montserrat-Bold', marginVertical: 30, textAlign: 'center', color: 'white'}]}>
                   Brinda {personajeSeleccionado.bonificacion} puntos en tu siguiente reporte
                 </Text>
               </View>
               <TouchableOpacity style={styles.seleccionarButton}>
-                <Text style={[styles.titulo, {fontSize: 18, color: '#6D6D6C'}]}>Seleccionar</Text> 
+                <Text style={[styles.titulo, {fontSize: 18, color: '#fff'}]}>Seleccionar</Text> 
               </TouchableOpacity>  
             </View>
 
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   titulo: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
     color: '#fff',
   },
   columnContainer: {

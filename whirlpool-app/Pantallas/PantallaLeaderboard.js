@@ -29,7 +29,7 @@ const Leaderboard = () => {
         <View style={styles.leaderboardContainer}>
           <Text style={styles.leaderboardTitle}>Leaderboard</Text>
           <View style={styles.podium}>
-            <View style={styles.podiumItem}>
+            <View style={[styles.podiumItem, { marginTop: 20 }]}>
               <View style={{ borderRadius: 25, overflow: 'hidden' }}>
                 <Avatar source={{ uri: empleados[2]?.foto_perfil }} style={{ width: 50, height: 50 }} />
               </View>
@@ -42,7 +42,7 @@ const Leaderboard = () => {
                 <Text style={styles.barChar}>3</Text>
               </View>
             </View>
-            <View style={styles.podiumItem}>
+            <View style={[styles.podiumItem, { marginTop: 0 }]}>
               <View style={{ borderRadius: 25, overflow: 'hidden' }}>
                 <Avatar source={{ uri: empleados[0]?.foto_perfil }} style={{ width: 50, height: 50 }} />
               </View>
@@ -55,7 +55,7 @@ const Leaderboard = () => {
                 <Text style={styles.barChar}>1</Text>
               </View>
             </View>
-            <View style={styles.podiumItem}>
+            <View style={[styles.podiumItem, { marginTop: 10 }]}>
               <View style={{ borderRadius: 25, overflow: 'hidden' }}>
                 <Avatar source={{ uri: empleados[1]?.foto_perfil }} style={{ width: 50, height: 50 }} />
               </View>
@@ -143,14 +143,14 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     borderRadius: 10,
-    marginTop: 60,
+    marginTop: 50,
   },
   bar3: {
     backgroundColor: '#eeb111',
     width: 100,
     height: 150,
     borderRadius: 10,
-    marginTop: 80,
+    marginTop: 60,
   },
 
   barChar: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
 
   listItemContainer: {
     backgroundColor: '#FFF',
-    marginTop: 10,
+    marginTop: 5,
     borderRadius: 10,
     marginHorizontal: 10,
   },

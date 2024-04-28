@@ -20,6 +20,7 @@ const App = () => {
         'Montserrat-Bold': require('./fonts/Poppins/Montserrat/static/Montserrat-Bold.ttf'),
         'Montserrat-SemiBold': require('./fonts/Poppins/Montserrat/static/Montserrat-SemiBold.ttf'),
         'Montserrat-Medium': require('./fonts/Poppins/Montserrat/static/Montserrat-Medium.ttf'),
+        'Montserrat-Black': require('./fonts/Poppins/Montserrat/static/Montserrat-Black.ttf'),
       });
       setFontsLoaded(true);
 
