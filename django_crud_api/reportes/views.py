@@ -177,9 +177,9 @@ def obtener_registro(request):
 def restablecer_puntos(request):
     try:
         # Obtener todos los objetos de tu modelo
-        empleados = empleado.objects.all()
+        empleados = Empleado.objects.all()
         
-        # Iterar sobre los objetos y actualizar los puntos de juego y puntos de trabajo a 0
+        # Iterar sobre los objetos y actualizar los puntos de trabajo a 0
         for empleado in empleados:
             empleado.puntos_trabajo = 0
             empleado.save()
