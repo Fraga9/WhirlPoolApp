@@ -36,6 +36,7 @@ const topRoundedRectangleHeight = topSectionHeight * 0.55;
 const PantallaPrincipal = () => {
   const navigation = useNavigation();
   const [fotoEmpleado, setFotoEmpleado] = useState(require("../images/iconoempleado.png"));
+  const [reportes, setReportes] = useState([]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -46,6 +47,16 @@ const PantallaPrincipal = () => {
         })
         .catch(error => {
           console.log(error);
+        });
+
+      axios.get('http://54.86.33.126:8000/reportes/reporte')
+        .then(response => {
+          const reportesEmpleado1 = response.data.filter(reporte => reporte.reportador === 1);
+          console.log('Reportes del empleado 1:', reportesEmpleado1);
+          setReportes(reportesEmpleado1.reverse());
+        })
+        .catch(error => {
+          console.error('Hubo un error al obtener los reportes:', error);
         });
     }, [])
   );
@@ -95,7 +106,7 @@ const PantallaPrincipal = () => {
         <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
           <View style={[styles.rowContainer, { marginTop: 20 }]}>
             <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('Reporte')} />
-            <Widget contenido="Aquí podrás consultar el catálogo de anomalías que puedes reportar" imageSource={imagenWidgetAnomalias} rotation={0} onPress={() => navigation.navigate('PantallaAnomalias')} />
+            <Widget contenido="Consulta el catálogo de anomalías" imageSource={imagenWidgetAnomalias} rotation={0} onPress={() => navigation.navigate('PantallaAnomalias')} />
             <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={15} onPress={() => navigation.navigate('Reporte')} />
             <Widget contenido="Reportes realizados" imageSource={imagenWidgetReportar} rotation={-10} onPress={() => navigation.navigate('Reporte')} />
           </View>
@@ -103,11 +114,9 @@ const PantallaPrincipal = () => {
 
         <Text style={styles.textoSeccion}>Últimos reportes</Text>
 
-        <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
-        <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
-        <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
-        <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
-        <DetallesReporte contenido="fksjafjkbafjksbjaaaaaaaaaajkfsaajfk" imageSource={iconoInforme} />
+        {reportes.slice(0,5).map((reporte, index) => (
+          <DetallesReporte key={index} contenido={reporte.motivo} imageSource={iconoInforme} />
+        ))}
 
         <TarjetaPersonaje imageSource={personajeSecundario.foto} nombrePersonaje={"Rotom Lavado"} />
 

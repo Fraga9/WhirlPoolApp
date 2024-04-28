@@ -116,14 +116,15 @@ const styles = StyleSheet.create({
   podium: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height: 250,
+    height: 275,
     padding: 10,
   },
   podiumItem: {
     alignItems: 'center',
+
   },
   underPodium: {
-    backgroundColor: '#FFF6EA',
+    backgroundColor: '#FFF',
     flex: 1,
     height: 800,
     borderRadius: 30,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   },
 
   listItemContainer: {
-    backgroundColor: '#FFF6EA',
+    backgroundColor: '#FFF',
     marginTop: 10,
     borderRadius: 10,
     marginHorizontal: 10,
@@ -200,3 +201,4 @@ const styles = StyleSheet.create({
 });
 
 export default Leaderboard;
+
