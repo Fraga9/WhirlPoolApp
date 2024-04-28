@@ -1,16 +1,20 @@
 from django.urls import path, include
-from rest_framework import routers
-from rest_framework.routers import SimpleRouter
-from rest_framework.documentation import include_docs_urls
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
-from .views import transcribe_audio, reportes_pendientes, personajes_empleado, fotos_reporte, obtener_registro, restablecer_puntos, reportes_asignados
+from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 
+from .views import (
+    EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, 
+    EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, 
+    EmpleadoPersonajeViewSet, transcribe_audio, reportes_pendientes, 
+    personajes_empleado, fotos_reporte, obtener_registro, 
+    restablecer_puntos, reportes_asignados
+)
 
 router = routers.SimpleRouter()
 
-# Comprobar si está guardado
+# Register viewsets
 router.register('estatus', EstatusViewSet)
 router.register('foto', FotoViewSet)
 router.register('sucursal', SucursalViewSet)
@@ -19,7 +23,6 @@ router.register('empleado', EmpleadoViewSet)
 router.register('reporte', ReporteViewSet)
 router.register('personaje', PersonajeViewSet)
 router.register('empleadopersonaje', EmpleadoPersonajeViewSet)
-
 
 urlpatterns = [
     path('', include(router.urls)),
