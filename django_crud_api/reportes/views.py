@@ -151,3 +151,25 @@ def fotos_reporte(request, reporte_id):
     fotos_urls = [foto.archivo_foto.url for foto in fotos]
     
     return JsonResponse({'fotos': fotos_urls})
+
+@api_view(['GET'])
+def obtener_registro(request):
+    reportes = Reporte.objects.all()
+
+    # Serializa los detalles de los reportes
+    data = []
+    for reporte in reportes:
+        detalle_reporte = {
+            'id_reporte': reporte.id_reporte,
+            'status': reporte.status.estatus,
+            'reportador': reporte.reportador,
+            'fecha_reporte': reporte.fecha_reporte,
+            'sucursal': reporte.sucursal.nombre_sucursal,
+            'motivo': reporte.motivo,
+            'descripcion': reporte.descripcion,
+        }
+        data.append(detalle_reporte)
+
+    return JsonResponse(data, safe=False)
+
+
