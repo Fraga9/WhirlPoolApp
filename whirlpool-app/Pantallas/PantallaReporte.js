@@ -32,6 +32,7 @@ const Report = () => {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   const [duration, setDuration] = useState(0);
+  const [reportId, setReportId] = useState(null);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -171,11 +172,8 @@ const Report = () => {
     setDate(currentDate);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
-    console.log('Motivo:', reason);
-    console.log('Ubicación:', location);
-    console.log('Descripción:', description);
     const reportData = {
       motivo: reason,
       descripcion: description,
@@ -183,45 +181,41 @@ const Report = () => {
       reportador: 1,
     }
 
-    fetch('http://54.86.33.126:8000/reportes/reporte/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reportData),
-    })
-
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
+    try {
+      const response = await fetch('http://54.86.33.126:8000/reportes/reporte/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reportData),
       });
 
+      const data = await response.json();
+      console.log('Success:', data);
+      console.log('ID del reporte:', data.id_reporte);
+      setReportId(data.id_reporte);
+      console.log('reportID', reportId);
 
-
-    let formDataFoto = new FormData();
-    formDataFoto.append('archivo_foto', {
-      uri: photo,
-      type: 'image/jpeg',
-      name: 'foto.jpg',
-    });
-    console.log(photo);
-    urlFoto = 'http://54.86.33.126:8000/reportes/foto/'
-
-    fetch(urlFoto, {
-      method: 'POST',
-      body: formDataFoto,
-    })
-
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
+      let formDataFoto = new FormData();
+      formDataFoto.append('archivo_foto', {
+        uri: photo,
+        type: 'image/jpeg',
+        name: 'foto.jpg',
       });
+
+      formDataFoto.append('reporte', data.id_reporte)
+      const urlFoto = 'http://54.86.33.126:8000/reportes/foto/'
+
+      const photoResponse = await fetch(urlFoto, {
+        method: 'POST',
+        body: formDataFoto,
+      });
+
+      const photoData = await photoResponse.json();
+      console.log('Success:', photoData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -309,8 +303,12 @@ const Report = () => {
             style={styles.picker}
             onValueChange={(itemValue, itemIndex) => setReason(itemValue)}
           >
+            <Picker.Item label="Escoge un motivo" value="" color='gray' />
             <Picker.Item label="Falta de inventario" value="Falta de inventario" />
-            <Picker.Item label="Otro" value="js" />
+            <Picker.Item label="Rayón o abolladura" value="Rayón o abolladura" />
+            <Picker.Item label="Etiquetado o adhsesivos mal colocados" value="Etiquetado o adhesivos mal colocados" />
+            <Picker.Item label="Producto fuera de categoría" value="Producto fuera de categoría" />
+            <Picker.Item label="Producto escondido del público" value="Producto escondido del público" />
           </Picker>
           <Text style={styles.title}>Ubicación</Text>
           <Picker
@@ -318,8 +316,9 @@ const Report = () => {
             style={styles.picker}
             onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
           >
+            <Picker.Item label="Escoge una sucursal" value="" color='gray' />
             <Picker.Item label="Home Depot Nogalar" value="1" />
-            <Picker.Item label="Otro" value="js" />
+            <Picker.Item label="Home Depot Galerías" value="2" />
           </Picker>
           <Text style={styles.title}>Descripción del reporte</Text>
           <Input
