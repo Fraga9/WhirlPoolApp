@@ -5,7 +5,7 @@ from rest_framework.documentation import include_docs_urls
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import EstatusViewSet, FotoViewSet, SucursalViewSet, RolesViewSet, EmpleadoViewSet, ReporteViewSet, PersonajeViewSet, EmpleadoPersonajeViewSet
-from .views import transcribe_audio, reportes_pendientes, personajes_empleado, fotos_reporte, obtener_registro, restablecer_puntos
+from .views import transcribe_audio, reportes_pendientes, personajes_empleado, fotos_reporte, obtener_registro, restablecer_puntos, reportes_asignados
 
 
 router = routers.SimpleRouter()
@@ -30,6 +30,7 @@ urlpatterns = [
     path('reporte/<int:reporte_id>/fotos/', fotos_reporte, name='fotos_reporte'),
     path('obtener_registro/', obtener_registro, name='obtener_registro'),
     path('restablecer_puntos/', restablecer_puntos, name='restablecer_puntos')
+    path('reportes_asignados/', reportes_asignados, name='reportes_asignados')
 ]
 
 

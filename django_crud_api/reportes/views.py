@@ -160,6 +160,32 @@ def reportes_pendientes(request):
 
 
 @api_view(["GET"])
+def reportes_asignados(request, id_empleado=None):
+    if id_empleado is not None:
+        reportes = Reporte.objects.filter(empleado=id_empleado, status=4)
+        reportes_ids = [reporte.id_reporte for reporte in reportes]
+        empleado = Empleado.objects.get(id=id_empleado)
+        data = {
+            "id_empleado": id_empleado,
+            "nombre": empleado.nombre,
+            "reportes_ids": reportes_ids,
+        }
+        return JsonResponse(data)
+    else:
+        empleados = Empleado.objects.all()
+        data = []
+        for empleado in empleados:
+            reportes = Reporte.objects.filter(empleado=empleado.id_empleado, status=4)
+            reportes_ids = [reporte.id_reporte for reporte in reportes]
+            empleado_data = {
+                "id_empleado": empleado.id_empleado,
+                "nombre": empleado.nombre,
+                "reportes_ids": reportes_ids,
+            }
+            data.append(empleado_data)
+        return JsonResponse(data, safe=False)
+
+@api_view(["GET"])
 def personajes_empleado(request, id_empleado):
     try:
         personajes = EmpleadoPersonaje.objects.filter(empleado=id_empleado)
