@@ -164,7 +164,7 @@ def reportes_asignados(request, id_empleado=None):
     if id_empleado is not None:
         reportes = Reporte.objects.filter(promotor=id_empleado, status=4)
         reportes_ids = [reporte.id_reporte for reporte in reportes]
-        empleado = Empleado.objects.get(id=id_empleado)
+        empleado = Empleado.objects.get(id_empleado=id_empleado)
         data = {
             "id_empleado": id_empleado,
             "nombre": empleado.nombre,
