@@ -163,6 +163,7 @@ def obtener_registro(request):
             'id_reporte': reporte.id_reporte,
             'status': reporte.status.estatus,
             'reportador': reporte.reportador,
+            'promotor': reporte.promotor,
             'fecha_reporte': reporte.fecha_reporte,
             'sucursal': reporte.sucursal.nombre_sucursal,
             'motivo': reporte.motivo,
