@@ -28,7 +28,8 @@ urlpatterns = [
     path('reportes_pendientes/', reportes_pendientes, name='reportes_pendientes'),
     path('personajes_empleado/<int:id_empleado>/', personajes_empleado, name='personajes_empleado'),
     path('reporte/<int:reporte_id>/fotos/', fotos_reporte, name='fotos_reporte'),
-    path('obtener_registro/', obtener_registro, name='obtener_registro')
+    path('obtener_registro/', obtener_registro, name='obtener_registro'),
+    path('restablecer_puntos/', restablecer_puntos, name='restablecer_puntos')
 ]
 
 
