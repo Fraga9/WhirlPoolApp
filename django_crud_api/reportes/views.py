@@ -164,7 +164,7 @@ def reportes_asignados(request, id_empleado=None):
     if id_empleado is not None:
         reportes = Reporte.objects.filter(promotor=id_empleado, status=4)
         reportes_ids = [reporte.id_reporte for reporte in reportes]
-        empleado = Empleado.objects.get(id_empleado=id_empleado)
+        empleado = Empleado.objects.get(id_empleado=id_empleado, rol=3)
         data = {
             "id_empleado": id_empleado,
             "nombre": empleado.nombre,
@@ -172,7 +172,7 @@ def reportes_asignados(request, id_empleado=None):
         }
         return JsonResponse(data)
     else:
-        empleados = Empleado.objects.all()
+        empleados = Empleado.objects.filter(rol=3)
         data = []
         for empleado in empleados:
             reportes = Reporte.objects.filter(promotor=empleado.id_empleado, status=4)
