@@ -173,4 +173,18 @@ def obtener_registro(request):
 
     return JsonResponse(data, safe=False)
 
+@api_view(['PATCH'])
+def restablecer_puntos(request):
+    try:
+        # Obtener todos los objetos de tu modelo
+        empleados = empleado.objects.all()
+        
+        # Iterar sobre los objetos y actualizar los puntos de juego y puntos de trabajo a 0
+        for empleado in empleados:
+            empleado.puntos_trabajo = 0
+            empleado.save()
+        
+        return JsonResponse({'message': 'Puntos de trabajo actualizados a 0 para todos los empleados'}, status=200)
+    except Exception as e:
+        return JsonResponse({'error': f'Error al actualizar los puntos: {str(e)}'}, status=500)
 
