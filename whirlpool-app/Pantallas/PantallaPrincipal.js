@@ -37,29 +37,27 @@ const PantallaPrincipal = () => {
   const navigation = useNavigation();
   const [fotoEmpleado, setFotoEmpleado] = useState(require("../images/iconoempleado.png"));
   const [reportes, setReportes] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
 
   useFocusEffect(
     React.useCallback(() => {
-      axios.get('http://54.86.33.126:8000/reportes/empleado/1/')
-        .then(response => {
-          setFotoEmpleado({ uri: response.data.foto_perfil });
-          console.log(response.data.foto_perfil);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
-      axios.get('http://54.86.33.126:8000/reportes/reporte')
-        .then(response => {
-          const reportesEmpleado1 = response.data.filter(reporte => reporte.reportador === 1);
-          setReportes(reportesEmpleado1.reverse());
-        })
+      Promise.all([
+        axios.get('http://54.86.33.126:8000/reportes/empleado/1/'),
+        axios.get('http://54.86.33.126:8000/reportes/reporte')
+      ])
+        .then(([fotoResponse, reportesResponse]) => {
+          setFotoEmpleado({ uri: fotoResponse.data.foto_perfil });
+          console.log('fotoResponse:', fotoResponse.data.foto_perfil);
+          const reportesEmpleado1 = reportesResponse.data.filter(reporte => reporte.reportador === 1);
+          setReportes(reportesEmpleado1.reverse()); 
+          console.log('reportesEmpleado1:', reportesEmpleado1[0])
+          console.log('currentStep:', reportesEmpleado1[0].status - 1)
+          setCurrentStep(reportesEmpleado1[0].status - 1);        })
         .catch(error => {
           console.error('Hubo un error al obtener los reportes:', error);
         });
     }, [])
   );
-
 
 
   return (
@@ -98,7 +96,7 @@ const PantallaPrincipal = () => {
 
         <Text style={styles.textoSeccion}>Solicitud en curso</Text>
 
-        <Progress currentStep={status} />
+        <Progress currentStep={currentStep} />
 
         <Text style={[styles.textoSeccion, { marginBottom: 0 }]}>Tus opciones</Text>
 
@@ -113,7 +111,7 @@ const PantallaPrincipal = () => {
 
         <Text style={styles.textoSeccion}>Últimos reportes</Text>
 
-        {reportes.slice(0,5).map((reporte, index) => (
+        {reportes.slice(0, 5).map((reporte, index) => (
           <DetallesReporte key={index} contenido={reporte.motivo} imageSource={iconoInforme} />
         ))}
 

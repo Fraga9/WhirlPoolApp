@@ -68,6 +68,7 @@ class Personaje(models.Model):
     id_personaje = models.AutoField(primary_key=True)
     nombre_personaje = models.CharField(max_length=50)
     bonificador = models.DecimalField(max_digits=3, decimal_places=1)
+    foto_personaje = models.ImageField(upload_to='fotos/', default='fotos/default.jpg')
     def __str__(self):
         return self.nombre_personaje
 
