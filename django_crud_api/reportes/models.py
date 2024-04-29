@@ -53,7 +53,7 @@ class Reporte(models.Model):
     descripcion = models.CharField(max_length=255)
     comentario = models.CharField(max_length=255, null=True, blank=True)
     reportador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_reportador')
-    fecha_reporte = models.DateField(auto_now_add=True)
+    fecha_reporte = models.DateField(auto_now_add=True, null=True, blank=True)
     asignador = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_asignador', null=True, blank=True)
     fecha_asignacion = models.DateField(auto_now_add=False, null=True, blank=True)
     promotor = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='reportes_promotor', null=True, blank=True)
