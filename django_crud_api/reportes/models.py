@@ -73,7 +73,7 @@ class Personaje(models.Model):
 
 
 class EmpleadoPersonaje(models.Model):
-    id_emp = models.AutoField(primary_key=True, null=True)
+    id_emp = models.AutoField(primary_key=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     personaje = models.ForeignKey(Personaje, on_delete=models.CASCADE)
     nivel_actual = models.IntegerField()
