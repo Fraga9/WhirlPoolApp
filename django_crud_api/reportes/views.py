@@ -194,8 +194,10 @@ def personajes_empleado(request, id_empleado):
             personaje_data = {
                 "id_empleado": personaje.empleado.id_empleado,
                 "id_personaje": personaje.personaje.id_personaje,
+                "id_unico" : personaje.id_emp,
                 "nombre_personaje": personaje.personaje.nombre_personaje,
                 "nivel_actual": personaje.nivel_actual,
+                
             }
             data.append(personaje_data)
         return JsonResponse(data, safe=False)  

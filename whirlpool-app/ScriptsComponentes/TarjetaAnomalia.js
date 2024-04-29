@@ -1,23 +1,22 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, ScrollView, Dimensions, Animated, TouchableOpacity } from 'react-native';
 
-
-
 const { height, width } = Dimensions.get('window');
 
 const containerHeight = height * 0.2;
 const roundedRectangleHeight = containerHeight * 0.8;
 const blackRectangleHeight = containerHeight * 0.2;
 
-
-const TarjetaAnomalia = ({ nombreAnomalia }) => {
-  return(
-      <View style={styles.container}>
-          <TouchableOpacity style={styles.roundedRectangle}/>
-          <View style={styles.bottomRectangle}>
-              <Text style={styles.nombreAnomalia}>{nombreAnomalia}</Text>
-          </View>
+const TarjetaAnomalia = ({ nombreAnomalia, imagenAnomalia }) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.roundedRectangle}>
+        <Image source={imagenAnomalia} style={styles.image} />
+      </TouchableOpacity>
+      <View style={styles.bottomRectangle}>
+        <Text style={styles.nombreAnomalia}>{nombreAnomalia}</Text>
       </View>
+    </View>
   )
 }
 
@@ -70,6 +69,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     margin: 30
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   }
 });
 

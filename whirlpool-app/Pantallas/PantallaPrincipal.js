@@ -52,7 +52,6 @@ const PantallaPrincipal = () => {
       axios.get('http://54.86.33.126:8000/reportes/reporte')
         .then(response => {
           const reportesEmpleado1 = response.data.filter(reporte => reporte.reportador === 1);
-          console.log('Reportes del empleado 1:', reportesEmpleado1);
           setReportes(reportesEmpleado1.reverse());
         })
         .catch(error => {

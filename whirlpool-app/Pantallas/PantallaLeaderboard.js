@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItemPosition: {
-    marginRight: 10,
+    marginRight: 15,
     fontSize: 16,
     fontFamily: 'Montserrat-Bold',
   },
