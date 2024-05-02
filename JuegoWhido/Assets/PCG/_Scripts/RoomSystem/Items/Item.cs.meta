@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 13ee310bf5ee65445a10e24d18798e3b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - spriteRenderer: {instanceID: 0}
+  - itemCollider: {instanceID: 0}
+  - hitFeedback: {instanceID: 0}
+  - destoyFeedback: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

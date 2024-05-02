@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\reyli\\Downloads\\WhidoGame\\NewAssembly.csproj",
+      "projectUniqueName": "C:\\Users\\reyli\\OneDrive\\Documentos\\GitHub\\WhirlPoolApp\\JuegoWhido\\NewAssembly.csproj",
       "projectName": "NewAssembly",
-      "projectPath": "C:\\Users\\reyli\\Downloads\\WhidoGame\\NewAssembly.csproj",
+      "projectPath": "C:\\Users\\reyli\\OneDrive\\Documentos\\GitHub\\WhirlPoolApp\\JuegoWhido\\NewAssembly.csproj",
       "packagesPath": "C:\\Users\\reyli\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\reyli\\Downloads\\WhidoGame\\Temp\\obj\\Debug\\NewAssembly\\",
+      "outputPath": "C:\\Users\\reyli\\OneDrive\\Documentos\\GitHub\\WhirlPoolApp\\JuegoWhido\\Temp\\obj\\Debug\\NewAssembly\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\reyli\\AppData\\Roaming\\NuGet\\NuGet.Config"
